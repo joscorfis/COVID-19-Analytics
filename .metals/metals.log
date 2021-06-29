@@ -1,0 +1,5 @@
+[0m2021.04.28 19:46:33 INFO  Started: Metals version 0.10.2 in workspace 'D:\Desktop\Workspaces\Workspace_TFG\covid19analyzer' for client vscode 1.55.2.[0m
+[0m2021.04.28 19:46:36 INFO  time: initialize in 3.2s[0m
+[0m2021.04.28 19:46:38 WARN  Build server is not auto-connectable.[0m
+[0m2021.04.28 19:46:38 WARN  no build tool detected in workspace 'D:\Desktop\Workspaces\Workspace_TFG\covid19analyzer'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.04.28 19:47:48 INFO  shutting down Metals[0m

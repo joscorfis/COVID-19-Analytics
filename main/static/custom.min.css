@@ -1,0 +1,244 @@
+
+/* = EXTRA = */
+
+/* footer */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-size: cover;
+}
+
+.cuerpo-pagina {
+  min-height: 100%;
+  margin-bottom: -55px;
+  padding-bottom: 60px;
+}
+
+.foot {
+  float:right;
+  text-decoration:none;
+  padding-left:10px;
+  position: sticky;
+  display:block;
+  width:100%;
+  height: 55px;
+  margin-bottom: 0;
+}
+
+/* Boton de cargar BD*/
+
+.nav-item button {
+  background-color: transparent;
+  border: none;
+}
+
+/* Listar objetos */
+
+
+#tabla-precios {
+  min-height: 100%;
+  display: block;
+  padding:1.5%;
+  padding-top: 50px;
+  padding-left: 3%;
+  padding-right: 1.5%;
+ /* padding-right: 130px*/
+}
+ 
+ /*Columnas*/
+ 
+ .precio-col {
+  background-color: #dbafff;
+  color: #222222;
+  float:left;
+  width:320px;
+  border-radius:15px;
+  border-width: 0.5px;
+  border: solid #7d30bb;
+  margin-bottom:50px;
+  box-shadow: 0px 5px 12px #000000
+ }
+ 
+ @media screen and (min-width:308px) {
+  .precio-col {
+  margin-left: 1%;
+  margin-right:1%;
+  }
+  
+  .precio-col:last-child {
+  margin-right:0
+  }
+ }
+
+
+ /*Imagen chiquita*/
+
+ .precio-col .borde-foto-movil {
+  background-image: linear-gradient(to bottom right, #7d30bb, #36065c);
+  width: 267px;
+  height: 267px;
+  margin-left: 2%;
+  border-radius: 5%;
+ }
+.borde-foto-movil img {
+  margin: 3%;
+  border-radius: 5%;
+ }
+.borde-foto-movil img:active {
+  opacity: 0.5;
+ }
+ 
+ /*Headers*/
+ 
+ .movil-col-header {
+  background-image: linear-gradient(to bottom left, #7d30bb, #36065c);;
+  padding:20px;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px
+ }
+ 
+ .movil-col-header h3 {
+  color:#f3f3f3;
+  text-align:center;
+  font-size:30px;
+  font-weight:600;
+  margin-bottom:0
+ }
+ 
+ .movil-col-header p {
+  text-align:center;
+  color:#f3f3f3;
+  font-size:14px;
+  margin-bottom:0
+ }
+ 
+ /*Características*/
+ 
+ .movil-col-features {
+  padding: 0 20px 20px 20px;
+  min-height: 225px;
+ }
+ 
+ .movil-col-features p {
+  padding:7px 0;
+  margin:0;
+  text-align:center;
+  border-top:1px solid #ddd
+ }
+ .movil-col-features p:hover {
+  background-color: #d6a4ff;
+  color: black;
+ }
+ 
+ 
+ /*Comprar*/
+ 
+ .movil-col-comprar {
+  padding:10px;
+  max-width:250px;
+  text-align:center;
+  background-color:#ffba52;
+  margin: 0 auto 20px;
+  border-radius:10px;
+  border: 2px solid #dd9933;
+  transition: all 0.3s;
+  box-shadow: 0px 2px 6px #000000
+ }
+ 
+ .movil-col-comprar a {
+  color:#222222;
+  padding:10px;
+  font-size:20px;
+  text-transform:uppercase;
+  text-decoration: none;
+  transition: all 0.3s
+ }
+ 
+ .movil-col-comprar:hover {
+  background-color:#ffae00;
+  transition: all 0.3s
+ }
+ 
+ .movil-col-comprar:active {
+  background-color: #c98a2b;
+ }
+
+ /* Vista individual*/
+
+ .tabla-detalles {
+  width:40%;
+  padding:0;
+  box-shadow: 0px 5px 12px #222222;
+ }
+
+.borde-foto-movil-ind1 {
+  background-image: linear-gradient(to bottom right, #7d30bb, #36065c);
+  width: 692px;
+  height: 692px;
+  margin-left: -12.5%;
+  border-radius: 5%;
+ }
+.borde-foto-movil-ind1  img {
+  margin: 3%;
+  border-radius: 5%;
+ }
+.borde-foto-movil-ind1  img:active {
+  opacity: 0.5;
+ }
+
+
+ .movil-col-features-ind1 {
+  padding: 0 20px 20px 20px;
+  min-height: 225px;
+ }
+ 
+ .movil-col-features-ind1 p {
+  padding:7px 0;
+  margin:0;
+  text-align:center;
+  border-top:1px solid #ddd
+ }
+ .movil-col-features-ind1 p:hover {
+  background-color: #d6a4ff;
+  color: black;
+ }
+
+
+/* FORM */
+
+.divform {
+  margin-top: 25px;
+  position: inline;
+  float:left;
+}
+
+.buttonform {
+  margin: 4px 10px;
+  position: inline;
+  float:right;
+}
+
+.buttonform input {
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+.buttonform input:hover {
+  background-color: #ead0ff;
+}
+.buttonform input:active {
+  background-color: #d494ff;
+}
+
+
+.divform label {
+  font-size: 25px;
+  padding-right: 10px;
+  color: white;
+}
+.divform select {
+  padding: 5px;
+  padding-right: 60px;
+}
