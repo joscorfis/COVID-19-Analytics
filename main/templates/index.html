@@ -2,20 +2,12 @@
 
 {% block style_css %}
 <style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+.espaciado {
+  padding: 25px;
+  border: solid white 6px;
 }
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
+.fila-del-centro {
+    padding: 50px;
 }
 </style>
 {% endblock %}
@@ -25,21 +17,44 @@ tr:nth-child(even) {
 {% endblock %}
 
 {% block contenido %}
-    <h2>Repositorios<h2>
+    <h2>Inicio<h2>
     <br>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Fecha de creación</th>
-            <th>Issues</th>
-        </tr>
-        {% for i,n,c in ids,nombres,creaciones %}
-        <tr>
-            <th>{{i}}</th>
-            <th>{{n}}</th>
-            <th>{{c}}</th>
-        </tr>
-        {% endfor %}
-    </table>
+
+    <div class="container text-center" style="max-width: 100%">
+      <div class="row">
+        <button class="col-sm-6 espaciado botones-inicio" style="background-color: blue" onclick="window.location.href='/lista'">
+          <div>1</div>
+        </button>
+        <div class="col-sm-6" style="padding: 0px">
+          <button class="espaciado botones-inicio" style="background-color: red; width:100%" onclick="window.location.href='/lista'">
+            <div>2</div>
+          </button>
+          <br>
+          <button class="espaciado botones-inicio" style="background-color: yellow; width:100%" onclick="window.location.href='/lista'">
+            <div>3</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: lightgreen" onclick="window.location.href='/lista'">
+          <div>4</div>
+        </button>
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: orange" onclick="window.location.href='/lista'">
+          <div>5</div>
+        </button>
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: pink" onclick="window.location.href='/lista'">
+          <div>6</div>
+        </button>
+      </div>
+
+      <div class="row">
+        <button class="col-sm-6 espaciado botones-inicio" style="background-color: lightgray" onclick="window.location.href='/lista'">
+          <div>7</div>
+        </button>
+        <button class="col-sm-6 espaciado botones-inicio" style="background-color: aquamarine" onclick="window.location.href='/lista'">
+          <div>8</div>
+        </button>
+      </div>
+    </div>
 {% endblock %}

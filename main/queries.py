@@ -10,7 +10,7 @@ def run_query(query): # A simple function to use requests.post to make the API c
 
     request = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
     if request.status_code == 200:
-        print(request.json())
+        #print(request.json())
         return request.json()
     else:
         raise Exception("Query failed to run by returning code of {}. {}".format(request.status_code, query))
@@ -46,12 +46,12 @@ def get_repositories_coronavirus():
     ids = []
     nombres = []
     creaciones = []
-    d = dict()
-    lista = []
+    issues = []
     for i in range(num_results):
-        d["ids"] = [result["data"]["search"]["edges"][i]["node"]["id"]]
-        d["nombres"] = [result["data"]["search"]["edges"][i]["node"]["name"]]
-        d["creaciones"] = [result["data"]["search"]["edges"][i]["node"]["createdAt"]]
-        lista = lista+d["ids"]+d["nombres"]+d["creaciones"]
-    return lista
+        ids.append([result["data"]["search"]["edges"][i]["node"]["id"]])
+        nombres.append([result["data"]["search"]["edges"][i]["node"]["name"]])
+        creaciones.append([result["data"]["search"]["edges"][i]["node"]["createdAt"]])
+        issues.append([result["data"]["search"]["edges"][i]["node"]["issues"]["totalCount"]])
+    print(nombres)
+    return [ids,nombres,creaciones,issues]
 

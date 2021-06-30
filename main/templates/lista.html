@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+    <h2>Repositorios<h2>
+    <br>
+    <table>
+        <tr>
+            <th class="text-center">Id</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Fecha de creación</th>
+            <th class="text-center">Issues</th>
+        </tr>
+        {% for id,n,c,isu in lista %}
+        <tr>
+            <th><a href="/show/1">{{id}}</a></th>
+            <th><a href="/show/1">{{n}}</a></th>
+            <th>{{c}}</th>
+            <th>{{isu}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -49,11 +49,15 @@
 
           <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/">Inicio
-                  <span class="sr-only">(current)</span>
+              <li class="nav-item active seccion-barra">
+                <a class="nav-link" href="/">
+                  <img src="/static/images/logo.png" height="40px" width="120px">
                 </a>
               </li>
+              <li class="nav-item active seccion-barra">
+                <a class="nav-link" href="/">Inicio</a>
+              </li>
+              <!-- 
               <li class="nav-item">
                 <a class="nav-link" href="http://localhost:8000/lista/">Todos los Móviles</a>
               </li>
@@ -80,24 +84,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="http://localhost:8000/log/">Log</a>
               </li>
+              -->
             </ul>
-            <ul class="navbar-nav float-right">
-              <li class="nav-item row" style="justify-content:space-around">
-                <div id="progressbar" class="col" style="display:none">
-                  <progress class="mt-4"></progress>
-                </div>
-                <div class="col">
-                  <form method="POST" onsubmit="return confirm('Este proceso eliminará todos los datos previamente almacenados\n¿Esta usted seguro de querer cargar la base de datos?');">
-                    {% csrf_token %}
-                    <button class="nav-link" type="submit" onclick="showProgressBar()" href="http://localhost:8000/populate/">Cargar BD &nbsp<i style="font-size:36px" class="fa fa-database"></i></i></a>
-                  </form>
-                  
-                </div>
-              </li>
-              <li class="nav-item row" style="justify-content:space-around">
-                <div class="col">
-                  <a class="nav-link" type="submit" onclick="showProgressBar()" href="http://localhost:8000/rs/">Cargar SR &nbsp<i style="font-size:36px" class="fa fa-star"></i></i></a>
-                </div>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active seccion-barra text-center">
+                <p class="nav-link">Contador</p>
               </li>
             </ul>
           </div>

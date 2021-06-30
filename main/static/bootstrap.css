@@ -10313,7 +10313,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .navbar.bg-primary {
-  background-image: linear-gradient(#875daa, #4f177c 50%, #36065c);
+  background-image: linear-gradient(#875daa, #875daa 50%, #875daa);
   background-repeat: no-repeat;
   -webkit-filter: none;
   filter: none;
