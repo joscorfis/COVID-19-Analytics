@@ -7,7 +7,7 @@ before_install:
 - cd covid19analyzer
 install: 
 - pip install -r ../requirements.txt
-script: 
-- python manage.py test
+#script: 
+#- python manage.py test
 before_script:
  - cp local_settings.travis.py local_settings.py
