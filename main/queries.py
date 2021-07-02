@@ -1,4 +1,5 @@
 from graphene import ObjectType, String, Schema
+import dateutil.parser
 import requests
 
 headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
@@ -10,26 +11,25 @@ def run_query(query): # A simple function to use requests.post to make the API c
 
     request = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
     if request.status_code == 200:
-        #print(request.json())
         return request.json()
     else:
         raise Exception("Query failed to run by returning code of {}. {}".format(request.status_code, query))
 
-def get_repositories_coronavirus():
+def get_repositorios_coronavirus_mas_visualizados():
 
     query = """
     {
-    search(query: "name:covid sort:asc", type: REPOSITORY, first: 100 ) {
+        search(query: "topic:covid-19  followers:>=20", type: REPOSITORY, first: 100 ) {
         repositoryCount
         edges {
-            node {
+        node {
             ... on Repository {
             id
             name
             createdAt
-            issues {
+            watchers {
                 totalCount
-            }            
+            }
             }
         }
         }
@@ -39,19 +39,33 @@ def get_repositories_coronavirus():
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
-    print(num_results)
     ids = []
     nombres = []
-    creaciones = []
-    issues = []
+    fechaCreacion = []
+    visualizaciones = []
     for i in range(num_results):
-        ids.append([result["data"]["search"]["edges"][i]["node"]["id"]])
-        nombres.append([result["data"]["search"]["edges"][i]["node"]["name"]])
-        creaciones.append([result["data"]["search"]["edges"][i]["node"]["createdAt"]])
-        issues.append([result["data"]["search"]["edges"][i]["node"]["issues"]["totalCount"]])
-    print(nombres)
-    return [ids,nombres,creaciones,issues]
+        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
+        fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
+        visualizaciones.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
+    return [ids,nombres,fechaCreacion,visualizaciones]  
 
+    # id = [result["data"]["search"]["edges"][i]["node"]["id"]]
+    #     nombre = [result["data"]["search"]["edges"][i]["node"]["name"]]
+    #     fechaCreacion = [result["data"]["search"]["edges"][i]["node"]["createdAt"]]
+    #     visualizaciones = [result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]]
+    #     repositorio = Repositorio(id=id,nombre=nombre, fechaCreacion=fechaCreacion, visualizaciones=visualizaciones)
+    #     listaDeRepositorios.append(repositorio)
+    # return listaDeRepositorios
+
+
+
+#==============
+# Otros métodos
+#==============
+
+def date_time_formatter(datetime) :
+    datetime2 = dateutil.parser.isoparse(datetime)
+    return datetime2.strftime('%d/%m/%Y %H:%M:%S')
