@@ -4,7 +4,7 @@ python:
 env: 
 - DJANGO=2.0
 before_install: 
-- cd decide
+- cd covid19analyzer
 install: 
 - pip install -r ../requirements.txt
 script: 
