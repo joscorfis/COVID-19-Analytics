@@ -27,22 +27,23 @@ tr:nth-child(even) {
 
 {% block contenido %}
     <br>
-    <h2><b>{{tipo}}</b><h2>
+    <h2><b>Repositorios COVID con más forks</b><h2>
     <br>
     <table>
         <tr>
-            <th class="text-center">Visualizaciones</th>
+            <th class="text-center">Nº de Forks</th>
             <th class="text-center">Id</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Fecha de creación</th>
         </tr>
-        {% for id,n,c,v in lista %}
+        {% for id,n,c,f,p in lista %}
         <tr>
-            <th class="text-center">{{v}}</th>
+            <th class="text-center grafica_support" style="width:{{p}}%">{{f}}</th>
             <th><a href="/show/1">{{id}}</a></th>
             <th><a href="/show/1">{{n}}</a></th>
             <th class="text-center">{{c}}</th>
         </tr>
         {% endfor %}
     </table>
+
 {% endblock %}
