@@ -138,9 +138,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-*.pyc
+
+
+covid19analyzer/__pycache__/urls.cpython-38.pyc
 main/__pycache__/models.cpython-38.pyc
 main/__pycache__/queries.cpython-38.pyc
 main/__pycache__/views.cpython-38.pyc
-covid19analyzer/__pycache__/urls.cpython-38.pyc
-

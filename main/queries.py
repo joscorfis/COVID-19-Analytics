@@ -45,20 +45,64 @@ def get_repositorios_coronavirus_mas_visualizados():
     nombres = []
     fechaCreacion = []
     visualizaciones = []
+    porcentajes = []
     for i in range(num_results):
         ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
         visualizaciones.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
-    return [ids,nombres,fechaCreacion,visualizaciones]  
+        if(i<1):
+            max_visualizaciones = visualizaciones[0]
+            porcentajes.append(100)
+        else:
+            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_visualizaciones)*100)
+    return [ids,nombres,fechaCreacion,visualizaciones,porcentajes]  
 
-    # id = [result["data"]["search"]["edges"][i]["node"]["id"]]
-    #     nombre = [result["data"]["search"]["edges"][i]["node"]["name"]]
-    #     fechaCreacion = [result["data"]["search"]["edges"][i]["node"]["createdAt"]]
-    #     visualizaciones = [result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]]
-    #     repositorio = Repositorio(id=id,nombre=nombre, fechaCreacion=fechaCreacion, visualizaciones=visualizaciones)
-    #     listaDeRepositorios.append(repositorio)
-    # return listaDeRepositorios
+
+def get_repositorios_coronavirus_mas_forks():
+
+    query = """
+    {
+    search(query: "topic:covid-19 forks:>=60", type: REPOSITORY, first: 100 ) {
+        repositoryCount
+        edges {
+        node {
+            ... on Repository {
+            id
+            name
+            createdAt
+            forks {
+                totalCount
+            }
+            }
+        }
+        }
+    }
+    }
+    """    
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    if(num_results>100):
+        num_results = 100
+    ids = []
+    nombres = [] 
+    fechaCreacion = []
+    forks = [] 
+    porcentajes = []
+    for i in range(num_results):
+        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
+        fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
+        forks.append(result["data"]["search"]["edges"][i]["node"]["forks"]["totalCount"])
+        if(i<1):
+            max_forks = forks[0]
+            porcentajes.append(100)
+        else:
+            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["forks"]["totalCount"]/max_forks)*100)
+
+    return [ids,nombres,fechaCreacion,forks,porcentajes]  
+
 
 
 

@@ -112,3 +112,8 @@ body {
   background-color: #daa2ff;
   border-radius: 10%;
 }
+
+.grafica_support {
+  float:left; 
+  background-color:rgb(59, 216, 59); 
+}
