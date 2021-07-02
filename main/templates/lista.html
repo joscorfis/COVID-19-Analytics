@@ -4,7 +4,7 @@
 <style>
 table {
   font-family: arial, sans-serif;
-  font-size: 20px;
+  font-size: 50%;
   border-collapse: collapse;
   width: 100%;
 }
@@ -16,7 +16,7 @@ td, th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #ededed;
 }
 </style>
 {% endblock %}
@@ -26,21 +26,22 @@ tr:nth-child(even) {
 {% endblock %}
 
 {% block contenido %}
-    <h2>Repositorios<h2>
+    <br>
+    <h2><b>{{tipo}}</b><h2>
     <br>
     <table>
         <tr>
+            <th class="text-center">Visualizaciones</th>
             <th class="text-center">Id</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Fecha de creación</th>
-            <th class="text-center">Issues</th>
         </tr>
-        {% for id,n,c,isu in lista %}
+        {% for id,n,c,v in lista %}
         <tr>
+            <th class="text-center">{{v}}</th>
             <th><a href="/show/1">{{id}}</a></th>
             <th><a href="/show/1">{{n}}</a></th>
-            <th>{{c}}</th>
-            <th>{{isu}}</th>
+            <th class="text-center">{{c}}</th>
         </tr>
         {% endfor %}
     </table>
