@@ -93,10 +93,11 @@ body {
 /*NUEVO CSS*/
 
 .botones-inicio:hover {
-  filter: brightness(90%);
+  filter: brightness(83%);
+  transition-duration: 0.4s;
 }
 .botones-inicio:active {
-  filter: brightness(80%);
+  filter: brightness(70%);
 }
 
 .seccion-barra {

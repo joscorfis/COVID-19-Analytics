@@ -22,41 +22,46 @@
 
     <div class="container text-center" style="max-width: 100%">
       <div class="row">
-        <button class="col-sm-6 espaciado botones-inicio" style="background-color: #8888ff" onclick="window.location.href='/lista-mas-visualizados'">
-          <div><b class="text-white">Repositorios COVID con más observadores/Watchers</b></div>
+        <button class="col-sm-6 espaciado botones-inicio invertir_colores" style="background-color: rgb(170, 0, 170)" onclick="window.location.href='/lista-mas-visualizados'">
+          <div><b class="text-white">Repositorios COVID con más observadores/watchers</b></div>
         </button>
         <div class="col-sm-6" style="padding: 0px">
-          <button class="espaciado botones-inicio" style="background-color: red; width:100%" onclick="window.location.href='/lista-mas-forks'">
+          <button class="espaciado botones-inicio invertir_colores" style="background-color: rgb(0, 0, 255); width:100%" onclick="window.location.href='/lista-mas-forks'">
             <div><b class="text-white">Repositorios COVID con más forks</b></div>
           </button>
           <br>
-          <button class="espaciado botones-inicio" style="background-color: yellow; width:100%" onclick="window.location.href='/lista'">
-            <div>3</div>
+          <button class="espaciado botones-inicio invertir_colores" style="background-color: rgb(255, 255, 0); width:100%" onclick="window.location.href='/lista-mas-estrellas'">
+            <div><b>Repositorios COVID con más estrellas</b></div>
           </button>
         </div>
       </div>
 
       <div class="row">
         <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: lightgreen" onclick="window.location.href='/lista'">
-          <div>4</div>
+          <div><b class="text-white">Lenguajes de programación más utilizados en repositorios COVID</b></div>
         </button>
         <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: orange" onclick="window.location.href='/lista'">
-          <div>5</div>
+          <div><b class="text-white">Repositorios COVID que aparecieron primero</b></div>
         </button>
         <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: pink" onclick="window.location.href='/lista'">
-          <div>6</div>
+          <div><b class="text-white">Repositorios COVID más actualizados</b></div>
         </button>
       </div>
 
       <div class="row">
-        <button class="col-sm-6 espaciado botones-inicio" style="background-color: lightgray" onclick="window.location.href='/lista'">
-          <div>7</div>
-        </button>
-        <button class="col-sm-6 espaciado botones-inicio" style="background-color: aquamarine" onclick="window.location.href='/lista'">
-          <div>8</div>
+        <div class="col-sm-6" style="padding: 0px">
+          <button class="espaciado botones-inicio" style="background-color: lightgray; width:100%" onclick="window.location.href='/lista-mas-forks'">
+            <div><b class="text-white">Repositorios COVID con más proyectos</b></div>
+          </button>
+          <br>
+          <button class="espaciado botones-inicio" style="background-color: aquamarine; width:100%" onclick="window.location.href='/lista'">
+            <div><b class="text-white">Paises más activos en la creación de repositorios COVID</b></div>
+          </button>
+        </div>
+        <button class="col-sm-6 espaciado botones-inicio" style="background-color: #ff5500" onclick="window.location.href='/lista-mas-visualizados'">
+          <div><b class="text-white">Representación del número de reporitorios COVID que han ido apareciendo con el tiempo</b></div>
         </button>
       </div>
-    </div>
 
 {% endblock %}
 
