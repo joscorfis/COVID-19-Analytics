@@ -47,6 +47,19 @@ def lista_mas_estrellas(request):
     mylist2_stars = list(zip(*mylist2))[3]
     return render(request,'lista_stars.html', {'lista':mylist2, 'nombres':mylist2_names, 'estrellas':mylist2_stars})
 
+def lista_mejores_lenguajes(request):
+    lenguajes = queries.get_lenguajes_mas_utilizados()
+    set_lenguajes = set(lenguajes)
+    cuentas = []
+    for i in set_lenguajes:
+        cuentas.append(lenguajes.count(i))
+    mylist = zip(set_lenguajes,cuentas)
+    mylist2 = sorted(mylist, key=lambda x: x[1], reverse=True)
+    lenguajes_ordenados = list(zip(*mylist2))[0]
+    valores_ordenados = list(zip(*mylist2))[1]
+    return render(request,'lista_languages.html', {'lista':mylist2, 'lenguajes':lenguajes_ordenados, 'valores':valores_ordenados})
+    
+
 def show(request):
     return render(request,'show.html')
     
