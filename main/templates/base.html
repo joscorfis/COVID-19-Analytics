@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+  <head>
+
+  <!-- - - - - - -->
+  <!--  STYLES   -->
+  <!-- - - - - - -->
+
+    <meta charset="utf-8">
+    <title>Covid-19 Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'bootstrap.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'custom.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>    <!-- Global Site Tag (gtag.js) - Google Analytics -->  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-23019901-1');
+    </script>
+    
+    {% block style_css %}{% endblock %}
+
+    {% block encabezado %}{% endblock %}
+
+  </head>
+
+  <!-- - - - - - -->
+  <!--   BODY    -->
+  <!-- - - - - - -->
+  <!-- <body background="{% static 'images/bgmoviles.jpg' %}" > -->
+  <body>
+    <div class="cuerpo-pagina">
+      <div class="bs-component" style="padding-bottom:20px">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="height: 60px;">
+          <div class="pr-4">
+            <a class="navbar-brand" href="http://localhost:8000/" >
+              <!--<img src="{% static 'images/logo.png' %}" width="200" height="50"> -->
+            </a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active seccion-barra">
+                <a class="nav-link" href="/">
+                  <img src="/static/images/logo.png" height="40px" width="120px">
+                </a>
+              </li>
+              <li class="nav-item active seccion-barra">
+                <a class="nav-link" href="/">Inicio</a>
+              </li>
+              <!-- 
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8000/lista/">Todos los Móviles</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Buscar por</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="http://localhost:8000/lista/color/">Color</a>
+                  <a class="dropdown-item" href="http://localhost:8000/lista/fabricante/">Fabricante</a>
+                  <a class="dropdown-item" href="http://localhost:8000/lista/precio/">Precio</a>
+                  <a class="dropdown-item" href="http://localhost:8000/lista/so/">Sistema operativo</a>
+                  <a class="dropdown-item" href="http://localhost:8000/lista/nucleos/">Núcleos del procesador</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="http://localhost:8000/lista/contenido/">Nombre</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recomendaciones</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/moviles-similares/">Moviles similares</a>
+                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/moviles-rec-user/">Moviles recomendados por usuario</a>
+                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/user-rec-moviles/">Moviles recomendados por usuario</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8000/log/">Log</a>
+              </li>
+              -->
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active seccion-barra text-center">
+                <p class="nav-link">Contador</p>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="row" style="width:100%;">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+          {% block contenido %}{% endblock %}
+        </div>
+        <div class="col-sm-1"></div>
+      </div>
+    </div>
+  </body>
+
+  <!-- - - - - - -->
+  <!--  FOOTER   -->
+  <!-- - - - - - -->
+
+  <!--
+  <footer>
+    <div class="bs-component">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary foot">
+        <div class="float-right" style="color: #bbbbbb; top:-20px;font-size: 15px">
+            <span><b>Trabajo realizado por:</b> José María Cornac Fisas</span><br>
+            <span><b>Para:</b> El proyecto de la asignatura AII</span>
+        </div>
+        <ul class="navbar-nav active">
+          <a class="nav-link" style="padding:0;" href="https://www.maxmovil.com/es/moviles-libres/comprar-smartphones-libres.html"><i style="font-size:36px" class="fa fa-book"></i> Fuente original</a>
+        </ul>
+        {% block pie %}{% endblock %} 
+      </nav>
+    </div>
+  </footer>
+  -->
+
+  <!-- - - - - - -->
+  <!-- FUNCIONES -->
+  <!-- - - - - - -->
+
+  <script>
+    function showProgressBar() {
+      var x = document.getElementById("progressbar");
+      if (x.style.display == "none") {
+        x.style.display = "block";
+      }
+    } 
+  </script>
+</html>
