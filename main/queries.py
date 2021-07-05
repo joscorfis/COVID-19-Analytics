@@ -1,4 +1,5 @@
 from graphene import ObjectType, String, Schema
+from datetime import date, timedelta
 import dateutil.parser
 import requests
 import json
@@ -238,10 +239,55 @@ def get_lenguajes_mas_utilizados():
     
     return lenguajes   
 
+
+def get_primeros_repositorios_coronavirus_creados():
+
+    query = """
+    {
+    search(query: "topic:covid-19 sort:updated-asc stars:>1", type: REPOSITORY, first: 100 ) {
+        repositoryCount
+        edges {
+        node {
+            ... on Repository {
+            id
+            name
+            createdAt
+            updatedAt
+            }
+        }
+        }
+    }
+    }
+    """    
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    if(num_results>100):
+        num_results = 100
+    ids = []
+    nombres = []
+    fechaCreacion = []
+    tiempo = []
+    for i in range(num_results):
+        createAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
+        if dateutil.parser.isoparse(createAt).date() > date(2019,12,31):
+            ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+            nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
+            fechaCreacion.append(date_time_formatter(createAt))
+            tiempo.append(days_until_now(createAt))
+
+    return [ids,nombres,fechaCreacion,tiempo]  
+
 #==============
 # Otros métodos
 #==============
 
-def date_time_formatter(datetime) :
-    datetime2 = dateutil.parser.isoparse(datetime)
-    return datetime2.strftime('%d/%m/%Y %H:%M:%S')
+def date_time_formatter(str_datetime) :
+    fecha = dateutil.parser.isoparse(str_datetime)
+    return fecha.strftime('%d/%m/%Y %H:%M:%S')
+
+def days_until_now(str_datetime):
+    fecha = dateutil.parser.isoparse(str_datetime)
+    result = (date.today() - fecha.date()).days
+    print(result)
+    return result
