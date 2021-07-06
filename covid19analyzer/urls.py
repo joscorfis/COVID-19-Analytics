@@ -10,5 +10,6 @@ urlpatterns = [
     path('lista-mas-estrellas/', views.lista_mas_estrellas),
     path('lista-mejores-lenguajes/', views.lista_mejores_lenguajes),
     path('lista-primeros-repositorios/', views.lista_primeros_repositorios),
+    path('lista-mas-actualizados/', views.lista_mas_actualizados),
     path('show/1', views.show),
 ]
