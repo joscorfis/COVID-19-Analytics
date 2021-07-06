@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 50%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+
+    <br>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Updates')">Por modificación</button>
+      <button class="tablinks" onclick="openTab(event, 'Commits')">Por commits</button>
+      <script>
+        function rotateImg() {
+          document.querySelector(".rotateimg").style.transform = "rotate(1080deg)";
+          document.getElementsByClassName("rotateimg")[0].classList.add("makeRotateImage");
+        }
+      </script>
+      <button class="float-right" onclick="location.reload(); rotateImg();"><img class="rotateimg" src="https://image.flaticon.com/icons/png/512/545/545661.png" width="22rem" height="22rem"></button>
+    </div>
+
+    <div id="Updates" class="tabcontent">
+      <br>
+      <h2><b>Repositorios COVID con modificaciones más recientes</b><h2>
+      <br>
+      <table>
+          <tr>
+              <th class="text-center">Ultima modificación</th>
+              <th class="text-center">Hace...</th>
+              <th class="text-center">Id</th>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Fecha de creación</th>
+          </tr>
+          {% for id,n,c,ultMod,tMod in listaU %}
+          <tr>
+              <th class="text-center">{{ultMod}}</th>
+              <th class="text-center">{{tMod}}</th>
+              <th><a href="/show/1">{{id}}</a></th>
+              <th><a href="/show/1">{{n}}</a></th>
+              <th class="text-center">{{c}}</th>
+          </tr>
+          {% endfor %}
+      </table>
+      <br>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+      <canvas id="chart" width="200" height="100"></canvas>  
+      <script>
+        let ctx = document.getElementById("chart").getContext("2d");
+        let str = "{{rangos}}".replaceAll("&#x27;", "").replaceAll(/ /g, "").replace("(","").replace(")","");
+        let lista_rangos = str.split(",");
+        let lista_valoresM = "{{valoresM}}".replaceAll(/ /g, "").replace("(","").replace(")","").split(",");
+        let chart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: lista_rangos,
+            datasets: [
+              {
+                label: "Modificaciones",
+                backgroundColor: 'rgba(170, 0, 170, 0.6)',
+                borderColor: "#000000", 
+                data: lista_valoresM
+                }
+              ]
+            },
+            options: {
+              title: {
+                  text: "Número total de modificaciones de los distintos repositorios en el tiempo",
+                  display: true
+              }
+            }
+          });
+      </script>
+    </div>
+
+    <div id="Commits" class="tabcontent">
+      <br>
+      <h2><b>Repositorios COVID con commits más recientes</b><h2>
+      <br>
+      <table>
+          <tr>
+              <th class="text-center">Ultimo commit</th>
+              <th class="text-center">Hace...</th>
+              <th class="text-center">Id</th>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Fecha de creación</th>
+          </tr>
+          {% for id,n,c,ultCom,tCom in listaC %}
+          <tr>
+              <th class="text-center">{{ultCom}}</th>
+              <th class="text-center">{{tCom}}</th>
+              <th><a href="/show/1">{{id}}</a></th>
+              <th><a href="/show/1">{{n}}</a></th>
+              <th class="text-center">{{c}}</th>
+          </tr>
+          {% endfor %}
+      </table>
+      <br>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+      <canvas id="chart2" width="200" height="100"></canvas>  
+      <script>
+        let ctx2 = document.getElementById("chart2").getContext("2d");
+        let str2 = "{{rangos}}".replaceAll("&#x27;", "").replaceAll(/ /g, "").replace("(","").replace(")","");
+        let lista_rangos2 = str2.split(",");
+        let lista_valoresC = "{{valoresC}}".replaceAll(/ /g, "").replace("(","").replace(")","").split(",");
+        let chart2 = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: lista_rangos2,
+            datasets: [
+              {
+                label: "Commits",
+                backgroundColor: 'rgba(170, 0, 170, 0.6)',
+                borderColor: "#000000", 
+                data: lista_valoresC
+                }
+              ]
+            },
+            options: {
+              title: {
+                  text: "Número total de commits de los distintos repositorios en el tiempo",
+                  display: true
+              }
+            }
+          });
+      </script>
+    </div>
+
+    <script>
+      function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+
+      // Para mostrar la primera pestaña
+      openTab(event, 'Updates')
+
+    </script>
+{% endblock %}

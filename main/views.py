@@ -89,6 +89,32 @@ def lista_primeros_repositorios(request):
 
     return render(request,'lista_firsts_repos.html', {'lista':mylist2, 'tiempos':mygraph2_tiempos, 'valores':mygraph2_valores})    
 
+
+def lista_mas_actualizados(request):
+    lista = queries.get_repositorios_coronavirus_mas_actualizados()
+    ids = lista[0]
+    nombres = lista[1]
+    fechaCreacion = lista[2]
+    ultimaModificacion = lista[3]
+    tiempoModificacion = lista[4]
+    ultimoCommit = lista[5]
+    tiempoCommit = lista[6]
+    grafica = lista[7]
+
+    mylistUpdate = zip(ids,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion)
+    mylistUpdate2 = sorted(mylistUpdate, key=lambda x: x[4])
+    
+    mylistCommit = zip(ids,nombres,fechaCreacion,ultimoCommit,tiempoCommit)
+    mylistCommit2 = sorted(mylistCommit, key=lambda x: x[4])
+
+    grafica = sorted(grafica, reverse=True)
+    grafica_rangos = list(zip(*grafica))[0]
+    grafica_valoresM = list(zip(*grafica))[1]
+    grafica_valoresC = list(zip(*grafica))[2]
+
+    return render(request,'lista_updates.html', {'listaU':mylistUpdate2, 'listaC':mylistCommit2, 'rangos':grafica_rangos, 'valoresM':grafica_valoresM, 'valoresC':grafica_valoresC})
+
+
 def show(request):
     return render(request,'show.html')
     
