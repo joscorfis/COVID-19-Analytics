@@ -8,8 +8,9 @@
   <!-- - - - - - -->
 
     <meta charset="utf-8">
-    <title>Covid-19 Analytics</title>
+    <title>COVID-19 Analytics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="{% static 'favicon.ico' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'bootstrap.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'custom.min.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -35,7 +36,15 @@
   <!-- - - - - - -->
   <!-- <body background="{% static 'images/bgmoviles.jpg' %}" > -->
   <body>
-    <div class="cuerpo-pagina">
+    <div class="loading">
+      <div class="text-center loading-advert">
+        <h3><b>CARGANDO...Por favor, espere pacientemente<b></h3>
+        <p>Se estan realizando las operaciones pertinentes, esto puede tardar entre 3 y 20 segundos.</p>
+      </div>
+      <br>
+      <img class="loading-gif" src="{% static 'loading.gif' %}" height="200rem" width="200rem">
+    </div>  
+    <div class="cuerpo-pagina body-class">
       <div class="bs-component" style="padding-bottom:20px">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="height: 60px;">
           <div class="pr-4">
@@ -51,11 +60,9 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active seccion-barra">
                 <a class="nav-link" href="/">
-                  <img src="/static/images/logo.png" height="40px" width="120px">
+                  <img style="padding-right: 1rem" src="/static/images/favicon.png" height="40rem" width=60rem">
+                  Inicio
                 </a>
-              </li>
-              <li class="nav-item active seccion-barra">
-                <a class="nav-link" href="/">Inicio</a>
               </li>
               <!-- 
               <li class="nav-item">

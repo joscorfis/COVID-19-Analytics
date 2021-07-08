@@ -11,5 +11,6 @@ urlpatterns = [
     path('lista-mejores-lenguajes/', views.lista_mejores_lenguajes),
     path('lista-primeros-repositorios/', views.lista_primeros_repositorios),
     path('lista-mas-actualizados/', views.lista_mas_actualizados),
+    path('grafica-de-evolucion/', views.grafica_de_evolucion),
     path('show/1', views.show),
 ]
