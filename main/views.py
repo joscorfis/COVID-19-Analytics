@@ -1,8 +1,5 @@
 from django.shortcuts import render
-from graphene import ObjectType, String, Schema
 from main import queries
-from datetime import date
-import dateutil.parser
 import requests
 
 # Create your views here.
@@ -113,6 +110,22 @@ def lista_mas_actualizados(request):
     grafica_valoresC = list(zip(*grafica))[2]
 
     return render(request,'lista_updates.html', {'listaU':mylistUpdate2, 'listaC':mylistCommit2, 'rangos':grafica_rangos, 'valoresM':grafica_valoresM, 'valoresC':grafica_valoresC})
+
+def grafica_de_evolucion(request):
+    lista = queries.get_evolucion_repositorios_coronavirus("2019-12-30")
+    nombres = lista[0]
+    fechaCreacion = lista[1]
+    ids = lista[2]
+    ids_github = lista[3]
+    grafica = lista[4]
+
+    mylist = zip(nombres,fechaCreacion,ids,ids_github)
+    mylist2 = sorted(mylist, key=lambda x: x[2])
+
+    grafica_rangos = grafica[1]
+    grafica_valores = grafica[2]
+
+    return render(request,'evolution_graph.html', {'lista':mylist2, 'rangos':grafica_rangos, 'valores':grafica_valores})
 
 
 def show(request):

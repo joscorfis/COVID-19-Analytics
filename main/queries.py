@@ -5,6 +5,8 @@ import dateutil.parser
 import requests
 import json
 import pandas as pd
+import numpy as np
+
 
 headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
 
@@ -292,11 +294,8 @@ def get_repositorios_coronavirus_mas_actualizados():
         ultimaModificacion.append(date_time_formatter(str_ultimaModificacion))
         tiempoModificacion.append(date_time_until_now(str_ultimaModificacion))
         str_ultimoCommit = result["data"]["search"]["edges"][i]["node"]["defaultBranchRef"]["target"]["history"]["edges"][0]["node"]["committedDate"]
-        if("días" in date_time_until_now(str_ultimoCommit)):
-            break
-        else:
-            ultimoCommit.append(date_time_formatter(str_ultimoCommit))
-            tiempoCommit.append(date_time_until_now(str_ultimoCommit))
+        ultimoCommit.append(date_time_formatter(str_ultimoCommit))
+        tiempoCommit.append(date_time_until_now(str_ultimoCommit))
 
     ranges = (pd.DataFrame(columns=['NULL'], index=pd.date_range(datetime.now()-timedelta(hours=8), datetime.now(), freq='10T'))
        .index.strftime('%d/%m/%Y %H:%M:%S')
@@ -335,6 +334,71 @@ def get_repositorios_coronavirus_mas_actualizados():
     grafica = zip(ranges2,list(reversed(cuentasM)),list(reversed(cuentasC)))
 
     return [ids,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion,ultimoCommit,tiempoCommit,grafica]  
+
+
+def get_evolucion_repositorios_coronavirus(str_fecha):
+    query = """
+    {
+    search(query: "topic:covid-19 sort:updated-asc stars:>1 created:>%s", type: REPOSITORY, first: 100 ) {
+        repositoryCount
+        edges {
+        node {
+            ... on Repository {
+            id
+            name
+            createdAt
+            }
+        }
+        }
+    }
+    }
+    """ % str_fecha   
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    print(num_results)
+    if(num_results>100):
+        num_results = 100
+    nombres = []
+    fechaCreacion = []
+    ids = [0]
+    ids_github = []
+    
+    for i in range(num_results):
+        createdAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
+        if(i==num_results-1 and len(ids)<2800):
+            lista = get_evolucion_repositorios_coronavirus(str(createdAt))
+            nombres.extend(lista[0])
+            fechaCreacion.extend(lista[1])
+            ids.extend(np.add(lista[2], 100).tolist())
+            ids_github.extend((lista[3]))
+        else:
+            nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
+            fechaCreacion.append(date_time_formatter(createdAt))
+            ids.append(ids[len(ids)-1]+1)
+            ids_github.append(result["data"]["search"]["edges"][i]["node"]["id"])
+
+    ranges = (pd.DataFrame(columns=['NULL'], index=pd.date_range(datetime(2019,11,30), datetime.now()+timedelta(60), freq='M'))
+       .index.strftime('%d/%m/%Y %H:%M:%S')
+       .tolist()
+    )
+    str_ranges = (pd.DataFrame(columns=['NULL'], index=pd.date_range(datetime(2019,11,30), datetime.now()+timedelta(60), freq='M'))
+       .index.strftime('%B/%Y')
+       .tolist()
+    )
+
+    cuentas = [0]*(len(ranges)-1)
+
+    for i in fechaCreacion:
+        for j in range(len(ranges)-1):
+            if(str_to_datetime(i)>str_to_datetime(ranges[j]) and str_to_datetime(i)<str_to_datetime(ranges[j+1])):
+                cuentas[j] = cuentas[j] + 1
+                break
+
+
+    grafica = [ranges,str_ranges,cuentas]
+
+    return [nombres,fechaCreacion,ids,ids_github,grafica]
 
 #==============
 # Otros métodos
