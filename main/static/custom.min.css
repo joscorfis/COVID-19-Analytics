@@ -267,3 +267,9 @@ body {
   z-index: 2;
 
 }
+
+.logo-img {
+  border: solid black 5px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+}

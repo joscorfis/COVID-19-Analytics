@@ -140,7 +140,12 @@ def lista_mas_proyectos(request):
     return render(request,'lista_projects.html', {'lista':mylist2})
 
 
-def show(request):
-    return render(request,'show.html')
+def show(request,name_owner):
+    print(name_owner)
+    nom_y_prop = name_owner.split("·")
+    nombre = nom_y_prop[0]
+    propietario = nom_y_prop[1]
+    lista = queries.get_information_from_repository(nombre, propietario)
+    return render(request,'show.html', {'lista': lista})
     
 

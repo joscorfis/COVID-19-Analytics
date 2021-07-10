@@ -13,5 +13,5 @@ urlpatterns = [
     path('lista-mas-actualizados/', views.lista_mas_actualizados),
     path('grafica-de-evolucion/', views.grafica_de_evolucion),
     path('lista-mas-proyectos/', views.lista_mas_proyectos),
-    path('show/1', views.show),
+    path('show/<str:name_owner>', views.show),
 ]
