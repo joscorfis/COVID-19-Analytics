@@ -474,6 +474,101 @@ def get_repositorios_coronavirus_mas_proyectos(fechas,str_fecha):
 
     return [nombres,propietarios,fechaCreacion,proyectos,ids]
 
+def get_information_from_repository(name, owner):
+    query = """
+    {
+    repositoryOwner(login:"%s") {
+        repository(name:"%s") {
+            name
+            url
+            description
+            owner {
+                avatarUrl
+                ...on User {
+                    location
+                }
+            }
+            createdAt
+            isFork
+            parent {
+                name
+            }
+            languages(first: 10) {
+                totalCount
+                nodes {
+                name
+                }
+            }
+            labels(first: 10) {
+                totalCount
+                nodes {
+                name
+                }
+            }
+            projects(first: 10) {
+                totalCount
+                nodes {
+                name
+                }
+            }
+            pushedAt
+            updatedAt
+            watchers {
+                totalCount
+            }
+            stargazers {
+                totalCount
+            }
+            forks {
+                totalCount
+            }
+            }
+        }
+    }
+    """ % (owner, name)
+
+    result = run_query(query) # Execute the query
+    print(result)
+
+    print(len(result["data"]["repositoryOwner"]["repository"]["languages"]["nodes"]))
+
+
+    foto = result["data"]["repositoryOwner"]["repository"]["owner"]["avatarUrl"]
+    url = result["data"]["repositoryOwner"]["repository"]["url"]
+    fechaCreacion = date_time_formatter(result["data"]["repositoryOwner"]["repository"]["createdAt"])
+    nombre = name
+    descripcion = result["data"]["repositoryOwner"]["repository"]["description"]
+    propietario = owner
+    print 
+    if("location" in result["data"]["repositoryOwner"]["repository"]["owner"]):
+        location = result["data"]["repositoryOwner"]["repository"]["owner"]["location"]
+    else: location = "No ha sido asignada"
+    isForked = result["data"]["repositoryOwner"]["repository"]["isFork"]
+    if(bool(isForked)):
+        isForked = "Sí"
+        parent = result["data"]["repositoryOwner"]["repository"]["parent"]
+    else: 
+        isForked = "No"
+        parent = "No procede, puesto que es un repositorio original"
+    languages = []
+    for i in range(len(result["data"]["repositoryOwner"]["repository"]["languages"]["nodes"])):
+        languages.append(result["data"]["repositoryOwner"]["repository"]["languages"]["nodes"][i]["name"])
+    labels = []
+    for i in range(len(result["data"]["repositoryOwner"]["repository"]["labels"]["nodes"])):
+        labels.append(result["data"]["repositoryOwner"]["repository"]["labels"]["nodes"][i]["name"])
+    num_proyectos = result["data"]["repositoryOwner"]["repository"]["projects"]["totalCount"]
+    proyectos = []
+    for i in range(num_proyectos):
+        proyectos.append(result["data"]["repositoryOwner"]["repository"]["projects"]["nodes"][i]["name"])
+    last_push = date_time_formatter(result["data"]["repositoryOwner"]["repository"]["pushedAt"])
+    last_update = date_time_formatter(result["data"]["repositoryOwner"]["repository"]["updatedAt"])
+    watchers = result["data"]["repositoryOwner"]["repository"]["watchers"]["totalCount"]
+    stars = result["data"]["repositoryOwner"]["repository"]["stargazers"]["totalCount"]
+    forks = result["data"]["repositoryOwner"]["repository"]["forks"]["totalCount"]
+    
+    return [foto,url,nombre,propietario,location,isForked,languages,labels,num_proyectos,proyectos,last_push,last_update,watchers,stars,forks,parent,fechaCreacion,descripcion]
+
+
 #==============
 # Otros métodos
 #==============
