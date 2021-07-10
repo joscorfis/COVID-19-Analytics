@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 50%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <h2 class="text-center"><b>Repositorios COVID con más proyectos</b><h2>
+    <br>
+    <table>
+        <tr>
+            <th class="text-center">Nº de proyectos</th>            
+            <th class="text-center">Proyectos</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Propietario</th>
+            <th class="text-center">Fecha de creación</th>
+            
+        </tr>
+        {% for n,o,c,p in lista %}
+        <tr>
+            <th class="text-center">{{p|length}}</th>
+            <th class="text-center">
+            {% for cont in p %}
+              {{cont}}<br>
+            {% endfor %}
+            </th>
+            <th><a href="/show/1">{{n}}</a></th>
+            <th class="text-center">{{o}}</th>
+            <th class="text-center">{{c}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+{% endblock %}
