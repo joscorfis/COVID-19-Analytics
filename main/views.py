@@ -9,13 +9,13 @@ def index(request):
 
 def lista_mas_visualizados(request):
     lista = queries.get_repositorios_coronavirus_mas_visualizados()
-    ids = lista[0]
+    propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
     observadores = lista[3]
     porcentajes = lista[4]
 
-    mylist = zip(ids,nombres,fechaCreacion,observadores,porcentajes)
+    mylist = zip(propietarios,nombres,fechaCreacion,observadores,porcentajes)
     mylist2 = sorted(mylist, key=lambda x: x[3], reverse=True)
     mylist2_names = list(zip(*mylist2))[1]
     mylist2_watchers = list(zip(*mylist2))[3]
@@ -24,13 +24,13 @@ def lista_mas_visualizados(request):
 
 def lista_mas_forks(request):
     lista = queries.get_repositorios_coronavirus_mas_forks()
-    ids = lista[0]
+    propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
     forks = lista[3]
     porcentajes = lista[4]
 
-    mylist = zip(ids,nombres,fechaCreacion,forks,porcentajes)
+    mylist = zip(propietarios,nombres,fechaCreacion,forks,porcentajes)
     mylist2 = sorted(mylist, key=lambda x: x[3], reverse=True)
     mylist2_names = list(zip(*mylist2))[1]
     mylist2_forks = list(zip(*mylist2))[3]
@@ -39,13 +39,13 @@ def lista_mas_forks(request):
 
 def lista_mas_estrellas(request):
     lista = queries.get_repositorios_coronavirus_mas_estrellas()
-    ids = lista[0]
+    propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
     estrellas = lista[3]
     porcentajes = lista[4]
 
-    mylist = zip(ids,nombres,fechaCreacion,estrellas,porcentajes)
+    mylist = zip(propietarios,nombres,fechaCreacion,estrellas,porcentajes)
     mylist2 = sorted(mylist, key=lambda x: x[3], reverse=True)
     mylist2_names = list(zip(*mylist2))[1]
     mylist2_stars = list(zip(*mylist2))[3]
@@ -68,7 +68,7 @@ def lista_mejores_lenguajes(request):
 
 def lista_primeros_repositorios(request):
     lista = queries.get_primeros_repositorios_coronavirus_creados()
-    ids = lista[0]
+    propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
     tiempo = lista[3]
@@ -77,7 +77,7 @@ def lista_primeros_repositorios(request):
 
     for i in set_tiempo:
         cuentas.append(tiempo.count(i))
-    mylist = zip(ids,nombres,fechaCreacion,tiempo)
+    mylist = zip(propietarios,nombres,fechaCreacion,tiempo)
     mylist2 = sorted(mylist, key=lambda x: x[3], reverse=True)
     mygraph = zip(set_tiempo,cuentas)
     mygraph2 = sorted(mygraph, key=lambda x: x[0], reverse=True)
@@ -89,7 +89,7 @@ def lista_primeros_repositorios(request):
 
 def lista_mas_actualizados(request):
     lista = queries.get_repositorios_coronavirus_mas_actualizados()
-    ids = lista[0]
+    propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
     ultimaModificacion = lista[3]
@@ -98,10 +98,10 @@ def lista_mas_actualizados(request):
     tiempoCommit = lista[6]
     grafica = lista[7]
 
-    mylistUpdate = zip(ids,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion)
+    mylistUpdate = zip(propietarios,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion)
     mylistUpdate2 = sorted(mylistUpdate, key=lambda x: x[4])
     
-    mylistCommit = zip(ids,nombres,fechaCreacion,ultimoCommit,tiempoCommit)
+    mylistCommit = zip(propietarios,nombres,fechaCreacion,ultimoCommit,tiempoCommit)
     mylistCommit2 = sorted(mylistCommit, key=lambda x: x[4])
 
     grafica = sorted(grafica, reverse=True)
@@ -112,7 +112,7 @@ def lista_mas_actualizados(request):
     return render(request,'lista_updates.html', {'listaU':mylistUpdate2, 'listaC':mylistCommit2, 'rangos':grafica_rangos, 'valoresM':grafica_valoresM, 'valoresC':grafica_valoresC})
 
 def grafica_de_evolucion(request):
-    lista = queries.get_evolucion_repositorios_coronavirus("2019-12-30")
+    lista = queries.get_evolucion_repositorios_coronavirus([],"2019-12-30")
     nombres = lista[0]
     fechaCreacion = lista[1]
     ids = lista[2]
@@ -126,6 +126,18 @@ def grafica_de_evolucion(request):
     grafica_valores = grafica[2]
 
     return render(request,'evolution_graph.html', {'lista':mylist2, 'rangos':grafica_rangos, 'valores':grafica_valores})
+
+def lista_mas_proyectos(request):
+    lista = queries.get_repositorios_coronavirus_mas_proyectos([],"2019-12-31T00:00:00+00:00")
+    nombres = lista[0]
+    propietario = lista[1]
+    fechaCreacion = lista[2]
+    proyectos = lista[3]
+
+    mylist = zip(nombres,propietario,fechaCreacion,proyectos)
+    mylist2 = sorted(mylist, key=lambda x: len(x[3]), reverse=True)
+
+    return render(request,'lista_projects.html', {'lista':mylist2})
 
 
 def show(request):

@@ -134,15 +134,15 @@ tr:nth-child(even) {
     <table>
         <tr>
             <th class="text-center">ID</th>
-            <th class="text-center">ID de GitHub</th>
             <th class="text-center">Nombre</th>
+            <th class="text-center">Propietario</th>
             <th class="text-center">Fecha de creación</th>
         </tr>
-        {% for n,c,i,ig in lista %}
+        {% for n,c,i,p in lista %}
         <tr>
-            <th>{{i}}</th>
-            <th><a href="/show/1">{{ig}}</a></th>
-            <th><a href="/show/1">{{n}}</a></th>
+            <th class="text-center">{{i}}</th>
+            <th class="text-center"><a href="/show/1">{{n}}</a></th>
+            <th class="text-center">{{p}}</th>
             <th class="text-center">{{c}}</th>
         </tr>
         {% endfor %}

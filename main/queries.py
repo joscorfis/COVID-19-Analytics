@@ -35,8 +35,10 @@ def get_repositorios_coronavirus_mas_visualizados():
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             watchers {
                 totalCount
@@ -52,13 +54,13 @@ def get_repositorios_coronavirus_mas_visualizados():
     num_results = int(result["data"]["search"]["repositoryCount"])
     if(num_results>100):
         num_results = 100
-    ids = []
+    propietarios = []
     nombres = []
     fechaCreacion = []
     observadores = []
     porcentajes = []
     for i in range(num_results):
-        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
         observadores.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
@@ -67,7 +69,7 @@ def get_repositorios_coronavirus_mas_visualizados():
             porcentajes.append(100)
         else:
             porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_observadores)*100)
-    return [ids,nombres,fechaCreacion,observadores,porcentajes]  
+    return [propietarios,nombres,fechaCreacion,observadores,porcentajes]  
 
 
 def get_repositorios_coronavirus_mas_forks():
@@ -79,8 +81,10 @@ def get_repositorios_coronavirus_mas_forks():
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             forks {
                 totalCount
@@ -96,13 +100,13 @@ def get_repositorios_coronavirus_mas_forks():
     num_results = int(result["data"]["search"]["repositoryCount"])
     if(num_results>100):
         num_results = 100
-    ids = []
+    propietarios = []
     nombres = [] 
     fechaCreacion = []
     forks = [] 
     porcentajes = []
     for i in range(num_results):
-        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
         forks.append(result["data"]["search"]["edges"][i]["node"]["forks"]["totalCount"])
@@ -112,7 +116,7 @@ def get_repositorios_coronavirus_mas_forks():
         else:
             porcentajes.append((result["data"]["search"]["edges"][i]["node"]["forks"]["totalCount"]/max_forks)*100)
 
-    return [ids,nombres,fechaCreacion,forks,porcentajes]  
+    return [propietarios,nombres,fechaCreacion,forks,porcentajes]  
 
 
 def get_repositorios_coronavirus_mas_estrellas():
@@ -124,8 +128,10 @@ def get_repositorios_coronavirus_mas_estrellas():
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             stargazers {
                 totalCount
@@ -141,13 +147,13 @@ def get_repositorios_coronavirus_mas_estrellas():
     num_results = int(result["data"]["search"]["repositoryCount"])
     if(num_results>100):
         num_results = 100
-    ids = []
+    propietarios = []
     nombres = [] 
     fechaCreacion = []
     estrellas = [] 
     porcentajes = []
     for i in range(num_results):
-        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(str(result["data"]["search"]["edges"][i]["node"]["name"]))
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
         estrellas.append(result["data"]["search"]["edges"][i]["node"]["stargazers"]["totalCount"])
@@ -157,7 +163,7 @@ def get_repositorios_coronavirus_mas_estrellas():
         else:
             porcentajes.append((result["data"]["search"]["edges"][i]["node"]["stargazers"]["totalCount"]/max_stars)*100)
 
-    return [ids,nombres,fechaCreacion,estrellas,porcentajes] 
+    return [propietarios,nombres,fechaCreacion,estrellas,porcentajes] 
 
 
 def get_lenguajes_mas_utilizados():
@@ -209,8 +215,10 @@ def get_primeros_repositorios_coronavirus_creados():
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             updatedAt
             }
@@ -224,19 +232,19 @@ def get_primeros_repositorios_coronavirus_creados():
     num_results = int(result["data"]["search"]["repositoryCount"])
     if(num_results>100):
         num_results = 100
-    ids = []
+    propietarios = []
     nombres = []
     fechaCreacion = []
     tiempo = []
     for i in range(num_results):
         createAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
         if dateutil.parser.isoparse(createAt).date() > date(2019,12,31):
-            ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+            propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
             nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
             fechaCreacion.append(date_time_formatter(createAt))
             tiempo.append(days_until_now(createAt))
 
-    return [ids,nombres,fechaCreacion,tiempo]  
+    return [propietarios,nombres,fechaCreacion,tiempo]  
 
 
 def get_repositorios_coronavirus_mas_actualizados():
@@ -248,8 +256,10 @@ def get_repositorios_coronavirus_mas_actualizados():
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             updatedAt
             defaultBranchRef{
@@ -278,7 +288,7 @@ def get_repositorios_coronavirus_mas_actualizados():
     num_results = int(result["data"]["search"]["repositoryCount"])
     if(num_results>100):
         num_results = 100
-    ids = []
+    propietarios = []
     nombres = []
     fechaCreacion = []
     ultimaModificacion = []
@@ -287,7 +297,7 @@ def get_repositorios_coronavirus_mas_actualizados():
     tiempoCommit = []
  
     for i in range(num_results):
-        ids.append(result["data"]["search"]["edges"][i]["node"]["id"])
+        propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
         str_ultimaModificacion = result["data"]["search"]["edges"][i]["node"]["updatedAt"]
@@ -333,10 +343,10 @@ def get_repositorios_coronavirus_mas_actualizados():
     
     grafica = zip(ranges2,list(reversed(cuentasM)),list(reversed(cuentasC)))
 
-    return [ids,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion,ultimoCommit,tiempoCommit,grafica]  
+    return [propietarios,nombres,fechaCreacion,ultimaModificacion,tiempoModificacion,ultimoCommit,tiempoCommit,grafica]  
 
 
-def get_evolucion_repositorios_coronavirus(str_fecha):
+def get_evolucion_repositorios_coronavirus(fechas,str_fecha):
     query = """
     {
     search(query: "topic:covid-19 sort:updated-asc stars:>1 created:>%s", type: REPOSITORY, first: 100 ) {
@@ -344,8 +354,10 @@ def get_evolucion_repositorios_coronavirus(str_fecha):
         edges {
         node {
             ... on Repository {
-            id
             name
+            owner {
+                login
+            }
             createdAt
             }
         }
@@ -362,21 +374,21 @@ def get_evolucion_repositorios_coronavirus(str_fecha):
     nombres = []
     fechaCreacion = []
     ids = [0]
-    ids_github = []
-    
+    propietarios = []
+
     for i in range(num_results):
         createdAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
         if(i==num_results-1 and len(ids)<2800):
-            lista = get_evolucion_repositorios_coronavirus(str(createdAt))
+            lista = get_evolucion_repositorios_coronavirus(fechaCreacion,str(createdAt))
             nombres.extend(lista[0])
             fechaCreacion.extend(lista[1])
             ids.extend(np.add(lista[2], 100).tolist())
-            ids_github.extend((lista[3]))
+            propietarios.extend((lista[3]))
         else:
             nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
             fechaCreacion.append(date_time_formatter(createdAt))
             ids.append(ids[len(ids)-1]+1)
-            ids_github.append(result["data"]["search"]["edges"][i]["node"]["id"])
+            propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
 
     ranges = (pd.DataFrame(columns=['NULL'], index=pd.date_range(datetime(2019,11,30), datetime.now()+timedelta(60), freq='M'))
        .index.strftime('%d/%m/%Y %H:%M:%S')
@@ -398,7 +410,69 @@ def get_evolucion_repositorios_coronavirus(str_fecha):
 
     grafica = [ranges,str_ranges,cuentas]
 
-    return [nombres,fechaCreacion,ids,ids_github,grafica]
+    return [nombres,fechaCreacion,ids,propietarios,grafica]
+
+
+def get_repositorios_coronavirus_mas_proyectos(fechas,str_fecha):
+    query = """
+    {
+    search(query: "topic:covid-19 sort:updated-desc created:<%s", type: REPOSITORY, first: 100 ) {
+        repositoryCount
+        edges {
+            node {
+            ... on Repository {
+            owner {
+                login
+            }
+            name
+            createdAt
+            projects(first: 10) {
+                nodes {
+                    name
+                }
+            }
+            }
+        }
+        }
+    }
+    }
+    """ % (str_fecha)
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    print(num_results)
+    if(num_results>100):
+        num_results = 100
+    nombres = []
+    propietarios = []
+    fechaCreacion = fechas
+    proyectos = []
+    ids = [0]
+
+    for i in range(num_results):
+        createdAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
+        str_fecha_after = str(str_fecha_after_generator(str_fecha).isoformat())
+        if(i==num_results-1 and len(ids)<200 and str_fecha_after_generator(str_fecha)<datetime.now().astimezone(UTC)):
+            lista = get_repositorios_coronavirus_mas_proyectos(fechaCreacion,str_fecha_after)
+            nombres.extend(lista[0])
+            propietarios.extend(lista[1])
+            fechaCreacion = lista[2]
+            proyectos.extend(lista[3])
+            ids.extend(np.add(lista[4], len(ids)).tolist())
+        
+        else:
+            projects = result["data"]["search"]["edges"][i]["node"]["projects"]["nodes"]
+            projects_by_rep = []    
+            for j in range(len(projects)):
+                projects_by_rep.append(projects[j]["name"])
+            if(len(projects_by_rep)>0 and (str(date_time_formatter(createdAt)) not in fechaCreacion) and str_to_datetime(date_time_formatter(createdAt))>datetime(2019,12,30)):
+                nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
+                propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
+                proyectos.append(projects_by_rep)
+                fechaCreacion.append(date_time_formatter(createdAt))
+                ids.append(ids[len(ids)-1]+1)
+
+    return [nombres,propietarios,fechaCreacion,proyectos,ids]
 
 #==============
 # Otros métodos
@@ -410,6 +484,10 @@ def date_time_formatter(str_datetime) :
 
 def str_to_datetime(str_datetime):
     return datetime.strptime(str_datetime, '%d/%m/%Y %H:%M:%S')
+
+def str_fecha_after_generator(str_datetime):
+    fecha = dateutil.parser.isoparse(str_datetime)
+    return fecha + timedelta(days=20)
 
 def days_until_now(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)

@@ -48,16 +48,16 @@ tr:nth-child(even) {
           <tr>
               <th class="text-center">Ultima modificación</th>
               <th class="text-center">Hace...</th>
-              <th class="text-center">Id</th>
               <th class="text-center">Nombre</th>
+              <th class="text-center">Propietario</th>
               <th class="text-center">Fecha de creación</th>
           </tr>
-          {% for id,n,c,ultMod,tMod in listaU %}
+          {% for p,n,c,ultMod,tMod in listaU %}
           <tr>
               <th class="text-center">{{ultMod}}</th>
               <th class="text-center">{{tMod}}</th>
-              <th><a href="/show/1">{{id}}</a></th>
-              <th><a href="/show/1">{{n}}</a></th>
+              <th class="text-center"><a href="/show/1">{{n}}</a></th>
+              <th class="text-center">{{p}}</th>
               <th class="text-center">{{c}}</th>
           </tr>
           {% endfor %}
@@ -102,16 +102,16 @@ tr:nth-child(even) {
           <tr>
               <th class="text-center">Ultimo commit</th>
               <th class="text-center">Hace...</th>
-              <th class="text-center">Id</th>
               <th class="text-center">Nombre</th>
+              <th class="text-center">Propietario</th>
               <th class="text-center">Fecha de creación</th>
           </tr>
-          {% for id,n,c,ultCom,tCom in listaC %}
+          {% for p,n,c,ultCom,tCom in listaC %}
           <tr>
               <th class="text-center">{{ultCom}}</th>
               <th class="text-center">{{tCom}}</th>
-              <th><a href="/show/1">{{id}}</a></th>
-              <th><a href="/show/1">{{n}}</a></th>
+              <th class="text-center"><a href="/show/1">{{n}}</a></th>
+              <th class="text-center">{{p}}</th>
               <th class="text-center">{{c}}</th>
           </tr>
           {% endfor %}

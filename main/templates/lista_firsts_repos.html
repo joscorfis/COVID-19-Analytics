@@ -33,15 +33,15 @@ tr:nth-child(even) {
         <tr>
             <th class="text-center">Tiempo</th>
             <th class="text-center">Fecha de creación</th>
-            <th class="text-center">Id</th>
             <th class="text-center">Nombre</th>
+            <th class="text-center">Propietario</th>
         </tr>
-        {% for id,n,c,t in lista %}
+        {% for p,n,c,t in lista %}
         <tr>
             <th class="text-center">{{t}} días</th>
             <th class="text-center">{{c}}</th>
-            <th><a href="/show/1">{{id}}</a></th>
-            <th><a href="/show/1">{{n}}</a></th>
+            <th class="text-center"><a href="/show/1">{{n}}</a></th>
+            <th class="text-center">{{p}}</th>
         </tr>
         {% endfor %}
     </table>
