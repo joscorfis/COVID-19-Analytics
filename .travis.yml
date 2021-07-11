@@ -17,3 +17,10 @@ script:
 - cp travis_local_settings.py local_settings.py
 - cd ..
 - coverage run --branch --source=. ./manage.py test
+deploy:
+- provider: heroku
+  app: covid-19analytics
+  strategy: git
+  api_key: $HEROKU_AUTH_TOKEN
+  on:
+    branch: develop
