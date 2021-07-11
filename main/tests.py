@@ -10,5 +10,5 @@ class TestCases(TestCase):
     def tearDown(self):
         super().tearDown()
 
-    def test_get_repositorios_coronavirus_mas_visualizados(self):
+    def test_basico(self):
         self.assertEqual(5,5)
