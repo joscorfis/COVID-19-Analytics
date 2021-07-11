@@ -582,7 +582,7 @@ def str_to_datetime(str_datetime):
 
 def str_fecha_after_generator(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
-    return fecha + timedelta(days=20)
+    return fecha + timedelta(days=30)
 
 def days_until_now(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)

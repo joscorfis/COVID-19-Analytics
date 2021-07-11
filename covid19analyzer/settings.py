@@ -81,11 +81,15 @@ DATABASES = {
         'NAME': 'covid19analyzer',
         'USER': 'c19auser',
         'PASSWORD': 'complexpassword',
-        'HOST': 'localhost',
+        'HOST': 'postgresql-corrugated-65637',
         'PORT': '5432',
     }
 }
 
+BASEURL = 'http://covid-19analytics.herokuapp.com'
+
+import django_heroku
+django_heroku.settings(locals())
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
