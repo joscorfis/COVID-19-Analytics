@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 100%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  width: 100px
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <h2 class="text-center"><b>Repositorios COVID con más observadores/watchers</b><h2>
+    <h3>Tabla resumen de resultados</h3>
+    <p>En la siguiente tabla se hallan representados los repositorios COVID que se han creado cada uno de los meses desde el comienzo de la pandemia</p>
+    <br>
+    <table class="text-center">
+      <tr>
+        <th class="text-center">Año / Mes</th>
+        <th>Enero</th>
+        <th>Febrero</th>
+        <th>Marzo</th>
+        <th>Abril</th>
+        <th>Mayo</th>
+        <th>Junio</th>
+        <th>Julio</th>
+        <th>Agosto</th>
+        <th>Septiembre</th>
+        <th>Octubre</th>
+        <th>Noviembre</th>
+        <th>Diciembre</th>
+      </tr>
+      <tr>
+        <td><b>2019</b></td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>{{valores.1}}</td>
+      </tr>
+      <tr>
+        <td><b>2020</b></td>
+        <td>{{valores.2}}</td>
+        <td>{{valores.3}}</td>
+        <td>{{valores.4}}</td>
+        <td>{{valores.5}}</td>
+        <td>{{valores.6}}</td>
+        <td>{{valores.7}}</td>
+        <td>{{valores.8}}</td>
+        <td>{{valores.9}}</td>
+        <td>{{valores.10}}</td>
+        <td>{{valores.11}}</td>
+        <td>{{valores.12}}</td>
+        <td>{{valores.13}}</td>
+      </tr>
+      <tr>
+        <td><b>2021</b></td>
+        <td>{{valores.14}}</td>
+        <td>{{valores.15}}</td>
+        <td>{{valores.16}}</td>
+        <td>{{valores.17}}</td>
+        <td>{{valores.18}}</td>
+        <td>{{valores.19}}</td>
+        <td>{{valores.20}}</td>
+        <td>{{valores.21}}</td>
+        <td>{{valores.22}}</td>
+        <td>{{valores.23}}</td>
+        <td>{{valores.24}}</td>
+        <td>{{valores.25}}</td>
+      </tr>
+    </table>
+    <br>
+    <h3>Gráfica de linea</h3>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+    <canvas id="chart" width="200" height="100"></canvas>  
+    <script>
+      let ctx = document.getElementById("chart").getContext("2d");
+      let str = "{{rangos}}".replaceAll("&#x27;", "").replaceAll(/ /g, "").replace("(","").replace(")","");
+      let lista_rangos = str.split(",");
+      let lista_valoresM = "{{valores}}".replaceAll(/ /g, "").replace("(","").replace(")","").split(",");
+      let chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: lista_rangos,
+          datasets: [
+            {
+              label: "Modificaciones",
+              backgroundColor: 'rgba(170, 0, 170, 0.4)',
+              borderColor: "#000000", 
+              data: lista_valoresM
+              }
+            ]
+          },
+          options: {
+            title: {
+                text: "Número total de modificaciones de los distintos repositorios en el tiempo",
+                display: true
+            }
+          }
+        });
+    </script>
+    <br>
+    <h3>Tabla con todos los repositorios COVID</h3>
+    <br>
+    <table>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Propietario</th>
+            <th class="text-center">Fecha de creación</th>
+        </tr>
+        {% for n,c,i,p in lista %}
+        <tr>
+            <th class="text-center">{{i}}</th>
+            <th class="text-center"><a href="/show/{{n}}·{{p}}">{{n}}</a></th>
+            <th class="text-center">{{p}}</th>
+            <th class="text-center">{{c}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+
+    
+      
+    
+{% endblock %}

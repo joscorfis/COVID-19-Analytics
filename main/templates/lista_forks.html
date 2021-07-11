@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 50%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <h2 class="text-center"><b>Repositorios COVID con más forks</b><h2>
+    <br>
+    <table>
+        <tr>
+            <th class="text-center">Nº de Forks</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Propietario</th>
+            <th class="text-center">Fecha de creación</th>
+        </tr>
+        {% for own,n,c,f,p in lista %}
+        <tr>
+            <th class="text-center grafica_support" style="width:{{p}}%">{{f}}</th>
+            <th class="text-center"><a href="/show/{{n}}·{{own}}">{{n}}</a></th>
+            <th class="text-center">{{own}}</th>
+            <th class="text-center">{{c}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+    <canvas id="chart" width="200" height="100"></canvas>  
+    <script>
+      let ctx = document.getElementById("chart").getContext("2d");
+      let str = "{{nombres}}".replaceAll("&#x27;", "").replaceAll(/ /g, "").replace("(","").replace(")","");
+      let lista_nombres = str.split(",");
+      let lista_forks = "{{forks}}".replaceAll(/ /g, "").replace("(","").replace(")","").split(",");
+      let chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: lista_nombres,
+          datasets: [
+            {
+              label: "Forks",
+              backgroundColor: 'rgba(0, 0, 255, 0.5)',
+              borderColor: "#000000", 
+              data: lista_forks
+              }
+            ]
+          },
+          options: {
+            title: {
+                text: "Número de forks realizados a los distintos repositorios",
+                display: true
+            }
+          }
+        });
+    </script>
+{% endblock %}

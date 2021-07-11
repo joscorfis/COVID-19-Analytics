@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 
 {% block style_css %}
+<style>
+table {
+  font-family: arial, sans-serif;
+  font-size: 50%;
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+
+.texto-secundario {
+    font-weight: lighter;
+}
+</style>
 {% endblock %}
 
 {% block encabezado %}
@@ -10,26 +31,88 @@
 
 {% block contenido %}
     
-    <h2>Repositorio 1<h2>
     <br>
-
+    <h2 class="text-center"><b>{{lista.2}}</b><h2>
+    <br>
     <div class="text-center">
-        <h4><b>Foto:</b></h4> 
-        <h4><b>URL del repositorio:</b></h4>
+
+        <a href="{{lista.0}}"><img class="logo-img" src="{{lista.0}}" alt="logo del repositorio" height="200rem" width="200rem"></a>
+        <h4><b>URL del repositorio:</b> <a href="{{lista.1}}">{{lista.1}}</a></h4>
+        <h4><b>Fecha de creación:</b> {{lista.16}}</h4>
     </div>
     <br>
-    <h4><b>Propietario:</b></h4> 
-    <h4><b>País de origen:</b></h4> 
-    <h4><b>¿Es un fork de otro repositorio?:</b></h4> 
-    <br>
-    <h4><b>Lenguajes:</b></h4> 
-    <h4><b>Labels:</b></h4> 
-    <h4><b>Nº de proyectos activos:</b></h4> 
-    <h4><b>Fecha del último push:</b></h4> 
-    <h4><b>Fecha de la última modificación:</b></h4> 
-    <h4><b>Nº de visualizaciones:</b></h4> 
-    <h4><b>Nº de estrellitas:</b></h4> 
-    <h4><b>Nº de veces que se hicieron fork:</b></h4> 
-
+    <table>
+        <tr>
+            <th>Descripción</th>
+            <th class="texto-secundario">{{lista.17}}</th> 
+        </tr>
+        <tr>
+            <th>Propietario</th>
+            <th class="texto-secundario">{{lista.3}}</th> 
+        </tr>
+        <tr>            
+            <th>Localidad</th>
+            <th class="texto-secundario">{{lista.4}}</th>
+        </tr>
+        <tr>
+            <th>¿Es un fork de otro repositorio?</th>
+            <th class="texto-secundario">{{lista.5}}</th>
+        </tr>
+        {% if lista.5 is "Si" %}
+        <tr>
+            <th>&nbsp&nbsp&nbsp&nbspRepositorio padre</th>
+            <th class="texto-secundario">{{lista.15}}</th>
+        </tr>
+        {% endif %}
+        
+        <tr>
+            <th>Lenguajes</th>
+            <th class="texto-secundario">
+            {% for i in lista.6 %}
+            {{i}},
+            {% endfor %}
+            <th>
+        </tr>
+        <tr>
+            <th>Labels</th>
+            <th class="texto-secundario">
+            {% for i in lista.7 %}
+            {{i}},
+            {% endfor%}
+            </th>
+        </tr>
+        <tr>
+            <th>Número de proyectos</th>
+            <th class="texto-secundario">{{lista.8}}</th>
+        </tr>
+        <tr>
+            <th>&nbsp&nbsp&nbsp&nbspProyectos</th>
+            <th class="texto-secundario">
+            {% for i in lista.9 %}
+            &nbsp&nbsp&nbsp&nbsp{{i}}<br>
+            {% endfor%}
+            </th>
+        </tr>
+        <tr>
+            <th>Fecha de último push</th>
+            <th class="texto-secundario">{{lista.10}}</th>
+        </tr>
+        <tr>
+            <th>Fecha de última modificación</th>
+            <th class="texto-secundario">{{lista.11}}</th>
+        </tr>
+        <tr>
+            <th>Número de seguidores</th>
+            <th class="texto-secundario">{{lista.12}} &#x1F441</th>
+        </tr>
+        <tr>
+            <th>Número de estrellas</th>
+            <th class="texto-secundario">{{lista.13}} &#11088</th>
+        </tr>
+        <tr>
+            <th>Número de forks que se le han hecho</th>
+            <th class="texto-secundario">{{lista.14}} &#x1F5A8</th>
+        </tr>
+    </table>
 
 {% endblock %}

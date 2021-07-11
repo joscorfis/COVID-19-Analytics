@@ -93,10 +93,11 @@ body {
 /*NUEVO CSS*/
 
 .botones-inicio:hover {
-  filter: brightness(90%);
+  filter: brightness(83%);
+  transition-duration: 0.4s;
 }
 .botones-inicio:active {
-  filter: brightness(80%);
+  filter: brightness(70%);
 }
 
 .seccion-barra {
@@ -111,4 +112,164 @@ body {
 .seccion-barra:active {
   background-color: #daa2ff;
   border-radius: 10%;
+}
+
+.grafica_support {
+  float:left; 
+  background-color:rgb(59, 216, 59); 
+}
+
+/* BOTON DE IR ARRIBA */
+
+.go-top-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 6.6rem;
+  height: 6.6rem;
+  z-index: -1;
+}
+
+.go-top-button {
+  width: 0rem;
+  height: 0rem;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  z-index: -1;
+}
+
+.go-top-button img {
+  position: absolute;
+  font-size: 1.7rem;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  transition: .2s;
+}
+
+.go-top-button img:hover {
+  filter: brightness(70%)
+}
+
+.go-top-button img:active {
+  filter: brightness(110%);
+  transition: .0s;
+}
+
+.show {
+  z-index: 10;
+}
+
+.show .go-top-button {
+  animation: popup .3s ease-in;
+  width: 6.6rem;
+  height: 6,6rem;
+  z-index: 11;
+}
+
+.show img {
+  transform: translate(-50%,-50%) scale(1);
+}
+
+@keyframes popup {
+  0% {
+    width: 0rem;
+    height: 0rem;
+  }
+  50% {
+    width: 8rem;
+    height: 8rem;
+  }
+  100% {
+    width: 6.6rem;
+    height: 6.6rem;
+  }
+}
+
+/* Updates and Commits */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid rgb(196, 164, 255);
+  background-color: rgb(221, 203, 255);
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: rgb(196, 164, 255);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: rgb(196, 164, 255);
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* ROTAR IMAGEN */
+
+
+.makeRotateImage {
+  -webkit-transition: 9s;
+  -moz-transition: 9s;
+  -ms-transition: 9s;
+  -o-transition: 9s;
+  transition: 9s;
+}
+
+/* BLUR DE CARGA */
+
+.blurDeCarga {
+  filter: blur(6px);
+  transition: .5s;
+}
+
+.loading {
+  position: fixed;
+  display: none;
+  z-index: 2;
+}
+
+.loading-gif {
+  position: fixed;
+  top: 50%;
+  left: 43%;
+  z-index: 2;
+}
+
+.loading-advert {
+  position: fixed;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  top: 25%;
+  left: 26%;
+  background-color: rgba(255,255,255,0.7);
+  z-index: 2;
+
+}
+
+.logo-img {
+  border: solid black 5px;
+  border-radius: 20px;
+  margin-bottom: 30px;
 }
