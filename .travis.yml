@@ -1,13 +1,9 @@
 language: python 
 python: 
-- "3.6"
-env: 
-- DJANGO=2.0 
-before_install: 
-- cd covid19analyzer
+- "3.8"
 install: 
 - pip install -r ../requirements.txt
 script: 
-- python manage.py test
-before_script:
+- cd covid19analyzer
 - cp local_settings.travis.py local_settings.py
+- python manage.py test
