@@ -1,5 +1,6 @@
 dist: xenial
-
+env: 
+- DJANGO=2.0
 before_script:
 - python manage.py makemigrations
 - CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
