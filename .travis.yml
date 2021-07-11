@@ -1,9 +1,18 @@
-language: python 
-python: 
-- "3.8"
-install: 
-- pip install -r ../requirements.txt
-script: 
+dist: xenial
+
+before_script:
+- python manage.py makemigrations
+- CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
+- CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
+- curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
+- unzip chromedriver_linux64.zip -d ~/bin
+language: python
+python:
+- '3.8'
+install:
+- pip install -r requirements.txt
+script:
 - cd covid19analyzer
-- cp local_settings.travis.py local_settings.py
-- python manage.py test
+- cp travis_local_settings.py local_settings.py
+- cd ..
+- coverage run --branch --source=. ./manage.py test
