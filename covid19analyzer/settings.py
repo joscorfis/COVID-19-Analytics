@@ -88,6 +88,9 @@ DATABASES = {
 
 BASEURL = 'http://covid-19analytics.herokuapp.com'
 
+import django_heroku
+django_heroku.settings(locals())
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
