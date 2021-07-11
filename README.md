@@ -1,2 +1,2 @@
-# COVID-10 Analytics
+# COVID-19 Analytics
 TFG project repository
