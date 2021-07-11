@@ -3,7 +3,7 @@ psycopg2==2.8.6
 coverage==4.5.2
 graphene
 requests
-panda
+pandas
 django-heroku
 gunicorn
 pillow
