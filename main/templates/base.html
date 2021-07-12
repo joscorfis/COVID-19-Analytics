@@ -60,8 +60,7 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active seccion-barra">
                 <a class="nav-link" href="/">
-                  <img style="padding-right: 1rem" src="/static/images/favicon.png" height="40rem" width=60rem">
-                  Inicio
+                  <img src="/static/images/logo.png" height="45rem" width="140rem">
                 </a>
               </li>
               <!-- 
@@ -95,7 +94,13 @@
             </ul>
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active seccion-barra text-center">
-                <p class="nav-link">Contador</p>
+                <div class="nav-link"><b>Contagiados: </b>{{contador.0}}</div>
+              </li>
+              <li class="nav-item active seccion-barra text-center">
+                <div class="nav-link"><b>Recuperados: </b>{{contador.1}}</div>
+              </li>
+              <li class="nav-item active seccion-barra text-center">
+                <div class="nav-link"><b>Fallecidos: </b>{{contador.2}}</div>
               </li>
             </ul>
           </div>
