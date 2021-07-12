@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'covid19analyzer',
         'USER': 'c19auser',
         'PASSWORD': 'complexpassword',
-        'HOST': 'postgresql-corrugated-65637',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

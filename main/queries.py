@@ -6,7 +6,8 @@ import requests
 import json
 import pandas as pd
 import numpy as np
-
+from functools import partial
+from geopy.geocoders import Nominatim
 
 headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
 
@@ -539,10 +540,10 @@ def get_information_from_repository(name, owner):
     nombre = name
     descripcion = result["data"]["repositoryOwner"]["repository"]["description"]
     propietario = owner
-    print 
+    location = "No ha sido asignada"
     if("location" in result["data"]["repositoryOwner"]["repository"]["owner"]):
-        location = result["data"]["repositoryOwner"]["repository"]["owner"]["location"]
-    else: location = "No ha sido asignada"
+        if(result["data"]["repositoryOwner"]["repository"]["owner"]["location"] is not None):
+            location = result["data"]["repositoryOwner"]["repository"]["owner"]["location"] + " - (" + from_local_to_country(result["data"]["repositoryOwner"]["repository"]["owner"]["location"]) + ")"
     isForked = result["data"]["repositoryOwner"]["repository"]["isFork"]
     if(bool(isForked)):
         isForked = "Sí"
@@ -569,6 +570,43 @@ def get_information_from_repository(name, owner):
     return [foto,url,nombre,propietario,location,isForked,languages,labels,num_proyectos,proyectos,last_push,last_update,watchers,stars,forks,parent,fechaCreacion,descripcion]
 
 
+def get_paises_mas_repositorios():
+    query = """
+        {
+    search(query: "topic:covid-19 stars:>100", type: REPOSITORY, first: 100) {
+        repositoryCount
+        edges {
+        node {
+            ... on Repository {
+            owner {
+                ... on User {
+                location
+                }
+            }
+            updatedAt
+            }
+        }
+        }
+    }
+    }
+    """
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    print(num_results)
+    if(num_results>100):
+        num_results = 100
+    paises = []
+
+    for i in range(num_results):
+        localidad = result["data"]["search"]["edges"][i]["node"]["owner"]
+        if(len(localidad)>0):
+            pais = from_local_to_country(result["data"]["search"]["edges"][i]["node"]["owner"]["location"])
+            if(pais is not None):
+                paises.append(pais)
+
+    return paises
+
 #==============
 # Otros métodos
 #==============
@@ -584,6 +622,10 @@ def str_fecha_after_generator(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
     return fecha + timedelta(days=50)
 
+def str_fecha_before_generator(str_datetime):
+    fecha = dateutil.parser.isoparse(str_datetime)
+    return fecha - timedelta(days=20)
+
 def days_until_now(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
     result = (date.today() - fecha.date()).days
@@ -594,3 +636,14 @@ def date_time_until_now(str_datetime):
     result = (datetime.now().astimezone(UTC)) - fecha
     str_result = str(result).split(":")
     return str_result[0].replace("days","días") + "h " + str_result[1] + "min y " + str_result[2].split(".")[0] + "seg"
+
+def from_local_to_country(str_local):
+    geolocator = Nominatim(user_agent="covid19analyzer")
+    location = geolocator.geocode(str_local)
+    if (location is not None):
+        localidad = location.address
+        localidad_partes = localidad.split(",")
+        pais = localidad_partes[len(localidad_partes)-1].strip()
+        return pais
+    else:
+        return None

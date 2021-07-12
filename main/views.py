@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from main import queries
-import requests
+from datetime import datetime
+from dateutil.tz import UTC
 
 # Create your views here.
 
@@ -149,3 +150,20 @@ def show(request,name_owner):
     return render(request,'show.html', {'lista': lista})
     
 
+def lista_mejores_paises(request):
+    paises = queries.get_paises_mas_repositorios()
+    set_paises = set(paises)
+    cuentas = []
+
+    for i in set_paises:
+        cuentas.append(paises.count(i))
+        
+    mylist = zip(set_paises,cuentas)
+    mylist2 = sorted(mylist, key=lambda x: x[1], reverse=True)
+    paises_ordenados = list(zip(*mylist2))[0]
+    valores_ordenados = list(zip(*mylist2))[1]
+
+    print(paises_ordenados)
+    print(valores_ordenados)
+
+    return render(request,'lista_countries.html', {'lista':mylist2, 'paises':paises_ordenados, 'valores':valores_ordenados})

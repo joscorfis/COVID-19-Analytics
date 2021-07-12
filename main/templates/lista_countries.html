@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block style_css %}
+<style>
+table {
+  align: center;
+  font-family: arial, sans-serif;
+  font-size: 50%;
+  border-collapse: collapse;
+  width: 40%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ededed;
+}
+</style>
+{% endblock %}
+
+{% block encabezado %}
+
+{% endblock %}
+
+{% block contenido %}
+    <br>
+    <h2 class="text-center"><b>Países más activos en la creación de repositorios COVID del top 100</b><h2>
+    <br>
+    <div style="float:left; padding-right:7%;width: 500;height: 500px;">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+      <canvas id="chart" width="600" height="820"></canvas>  
+      <script>
+        let ctx = document.getElementById("chart").getContext("2d");
+        let str = "{{paises}}".replaceAll("&#x27;", "").replaceAll(/ /g, "").replace("(","").replace(")","");
+        let lista_nombres = str.split(",");
+        let lista_watchers = "{{valores}}".replaceAll(/ /g, "").replace("(","").replace(")","").split(",");
+        let chart = new Chart(ctx, {
+          type: "horizontalBar",
+          data: {
+            labels: lista_nombres,
+            datasets: [
+              {
+                label: "Nº de repositorios",
+                backgroundColor: 'rgba(0, 190, 0, 0.6)',
+                borderColor: "#000000", 
+                data: lista_watchers,
+                }
+              ]
+            },
+          options: {
+            title: {
+              text: "Número de repositorios COVID que han sido creados en los distintos paises",
+              display: true,
+            }
+          }
+          });
+      </script>
+    </div>
+    <div>
+      <table>
+          <tr>
+              <th class="text-center">País</th>
+              <th class="text-center">Repositorios que contienen</th>
+          </tr>
+          {% for k,v in lista %}
+          <tr>
+              <th>{{k}}</th>
+              <th class="text-center">{{v}}</th>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+    <br>
+    
+    
+    
+{% endblock %}

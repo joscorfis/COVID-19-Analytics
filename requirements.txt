@@ -4,6 +4,7 @@ coverage==4.5.2
 graphene
 requests
 pandas
+geopy
 django-heroku
 graphene
 requests
