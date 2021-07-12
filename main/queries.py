@@ -9,6 +9,14 @@ import numpy as np
 from functools import partial
 from geopy.geocoders import Nominatim
 
+import shelve
+from django.shortcuts import render, redirect, get_object_or_404
+from bs4 import BeautifulSoup
+import urllib.request
+import lxml
+import re, os, shutil
+import random
+
 headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
 
 #=================
@@ -60,6 +68,7 @@ def get_repositorios_coronavirus_mas_visualizados():
     fechaCreacion = []
     observadores = []
     porcentajes = []
+    
     for i in range(num_results):
         propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
@@ -606,6 +615,29 @@ def get_paises_mas_repositorios():
                 paises.append(pais)
 
     return paises
+
+
+def get_cifras_pandemia():
+    f = urllib.request.urlopen("https://github.com/datasets/covid-19/blob/main/data/worldwide-aggregate.csv")
+    s = BeautifulSoup(f, "lxml")
+
+    tbody = s.find("table", class_="js-csv-data csv-data js-file-line-container").find("tbody").find_all("tr")
+    
+    pandemia_hoy = tbody[len(tbody)-1].find("td").find_next_sibling()
+    casos_confirmados_hoy = pandemia_hoy.find_next_sibling()
+    recuperaciones_hoy = casos_confirmados_hoy.find_next_sibling()
+    fallecimientos_hoy = recuperaciones_hoy.find_next_sibling()
+
+    pandemia_ayer = tbody[len(tbody)-2].find("td").find_next_sibling()
+    casos_confirmados_ayer = pandemia_ayer.find_next_sibling()
+    recuperaciones_ayer = casos_confirmados_ayer.find_next_sibling()
+    fallecimientos_ayer = recuperaciones_ayer.find_next_sibling()
+
+    casos_confirmados = int(casos_confirmados_hoy.get_text())-int(casos_confirmados_ayer.get_text())
+    recuperaciones = int(recuperaciones_hoy.get_text()) - int(recuperaciones_ayer.get_text())
+    fallecimientos = int(fallecimientos_hoy.get_text()) - int(fallecimientos_ayer.get_text())
+
+    return [casos_confirmados, recuperaciones, fallecimientos]
 
 #==============
 # Otros métodos
