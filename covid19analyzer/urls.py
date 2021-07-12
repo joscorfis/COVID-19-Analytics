@@ -13,5 +13,6 @@ urlpatterns = [
     path('lista-mas-actualizados/', views.lista_mas_actualizados),
     path('grafica-de-evolucion/', views.grafica_de_evolucion),
     path('lista-mas-proyectos/', views.lista_mas_proyectos),
+    path('lista-mejores-paises/', views.lista_mejores_paises),
     path('show/<str:name_owner>', views.show),
 ]
