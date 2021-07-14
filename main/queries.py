@@ -35,7 +35,7 @@ def run_query(query): # A simple function to use requests.post to make the API c
 # CONSULTAS
 #==========
 
-def get_repositorios_coronavirus_mas_visualizados():
+def get_repositorios_coronavirus_mas_seguidores():
 
     query = """
     {
@@ -66,20 +66,20 @@ def get_repositorios_coronavirus_mas_visualizados():
     propietarios = []
     nombres = []
     fechaCreacion = []
-    observadores = []
+    seguidores = []
     porcentajes = []
     
     for i in range(num_results):
         propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
-        observadores.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
+        seguidores.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
         if(i<1):
-            max_observadores = observadores[0]
+            max_seguidores = seguidores[0]
             porcentajes.append(100)
         else:
-            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_observadores)*100)
-    return [propietarios,nombres,fechaCreacion,observadores,porcentajes]  
+            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_seguidores)*100)
+    return [propietarios,nombres,fechaCreacion,seguidores,porcentajes]  
 
 
 def get_repositorios_coronavirus_mas_forks():
@@ -248,7 +248,7 @@ def get_primeros_repositorios_coronavirus_creados():
     tiempo = []
     for i in range(num_results):
         createAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
-        if dateutil.parser.isoparse(createAt).date() > date(2019,12,31):
+        if dateutil.parser.isoparse(createAt).date() > date(2019,12,30):
             propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
             nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
             fechaCreacion.append(date_time_formatter(createAt))
@@ -378,7 +378,6 @@ def get_evolucion_repositorios_coronavirus(fechas,str_fecha):
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
     nombres = []
@@ -450,7 +449,6 @@ def get_repositorios_coronavirus_mas_proyectos(fechas,str_fecha):
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
     nombres = []
@@ -538,10 +536,6 @@ def get_information_from_repository(name, owner):
     """ % (owner, name)
 
     result = run_query(query) # Execute the query
-    print(result)
-
-    print(len(result["data"]["repositoryOwner"]["repository"]["languages"]["nodes"]))
-
 
     foto = result["data"]["repositoryOwner"]["repository"]["owner"]["avatarUrl"]
     url = result["data"]["repositoryOwner"]["repository"]["url"]
@@ -602,7 +596,6 @@ def get_paises_mas_repositorios():
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
     paises = []

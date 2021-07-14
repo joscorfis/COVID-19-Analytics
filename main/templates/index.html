@@ -9,6 +9,11 @@
 .fila-del-centro {
     padding: 50px;
 }
+
+.row div b {
+  font-size: 1.5rem;
+}
+
 </style>
 {% endblock %}
 
@@ -17,47 +22,55 @@
 {% endblock %}
 
 {% block contenido %}
-    <h2>Inicio<h2>
-    <br>
+    <h1 class="text-center"><b>INICIO</b><h1>
     <div class="container text-center" style="max-width: 100%">
       <div class="row">
-        <button class="col-sm-6 espaciado botones-inicio invertir_colores" style="background-color: rgb(170, 0, 170)" onclick="window.location.href='/lista-mas-visualizados'; blurDeCarga()">
-          <div><b class="text-white">Repositorios COVID con más observadores/watchers</b></div>
+        <button class="col-sm-6 espaciado botones-inicio invertir_colores" style="background-color: #7f52d1" onclick="window.location.href='/lista-mas-visualizados'; blurDeCarga()">
+          <img src="http://assets.stickpng.com/images/580b585b2edbce24c47b2970.png" alt="cargando..." width="80rem" height="80rem">
+          <div><b class="text-white">Repositorios COVID con más seguidores/watchers</b></div>
         </button>
         <div class="col-sm-6" style="padding: 0px">
-          <button class="espaciado botones-inicio invertir_colores" style="background-color: rgb(0, 0, 255); width:100%" onclick="window.location.href='/lista-mas-forks'; blurDeCarga()">
-            <div><b class="text-white">Repositorios COVID con más forks</b></div>
+          <button class="espaciado botones-inicio invertir_colores" style="background-color: #7f52d1; width:100%" onclick="window.location.href='/lista-mas-forks'; blurDeCarga()">
+            <img style="float: left;" src="https://icon-library.com/images/c71a75539d.svg.svg" alt="cargando..." width="80rem" height="80rem">
+            <div style="padding-top:1rem"><b class="text-white">Repositorios COVID con más forks</b></div>
           </button>
           <br>
-          <button class="espaciado botones-inicio invertir_colores" style="background-color: rgb(255, 255, 0); width:100%" onclick="window.location.href='/lista-mas-estrellas'; blurDeCarga()">
-            <div><b>Repositorios COVID con más estrellas</b></div>
+          <button class="espaciado botones-inicio invertir_colores" style="background-color: #7f52d1; width:100%" onclick="window.location.href='/lista-mas-estrellas'; blurDeCarga()">
+            <img style="float: left;" src="https://icons555.com/images/icons-black/image_icon_star_8_pic_512x512.png" alt="cargando..." width="80rem" height="80rem">
+            <div style="padding-top:1rem"><b class="text-white">Repositorios COVID con más estrellas</b></div>
           </button>
         </div>
       </div>
 
       <div class="row">
-        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: rgb(0, 190, 0)" onclick="window.location.href='/lista-mejores-lenguajes'; blurDeCarga()">
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: #7f52d1" onclick="window.location.href='/lista-mejores-lenguajes'; blurDeCarga()">
+          <img src="https://www.pngrepo.com/png/28224/180/programming.png" alt="cargando..." width="80rem" height="80rem">
           <div><b class="text-white">Lenguajes de programación más utilizados en repositorios COVID</b></div>
         </button>
-        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: orange" onclick="window.location.href='/lista-primeros-repositorios'; blurDeCarga()">
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: #7f52d1" onclick="window.location.href='/lista-primeros-repositorios'; blurDeCarga()">
+          <img src="https://img.icons8.com/ios-filled/452/repository.png" alt="cargando..." width="80rem" height="80rem">
           <div><b class="text-white">Repositorios COVID que aparecieron primero</b></div>
         </button>
-        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: pink" onclick="window.location.href='/lista-mas-actualizados'; blurDeCarga()">
+        <button class="fila-del-centro col-sm-4 espaciado botones-inicio" style="background-color: #7f52d1" onclick="window.location.href='/lista-mas-actualizados'; blurDeCarga()">
+          <img src="http://simpleicon.com/wp-content/uploads/refresh.png" alt="cargando..." width="80rem" height="80rem">          
           <div><b class="text-white">Repositorios COVID más actualizados</b></div>
         </button>
       </div>
 
       <div class="row">
         <div class="col-sm-6" style="padding: 0px">
-          <button class="espaciado botones-inicio" style="background-color: lightgray; width:100%" onclick="window.location.href='/lista-mas-proyectos'; blurDeCarga()">
-            <div><b class="text-white">Repositorios COVID con más proyectos</b></div>
+          <button class="espaciado botones-inicio" style="background-color: #7f52d1; width:100%" onclick="window.location.href='/lista-mas-proyectos'; blurDeCarga()">
+            <img style="float: left;" src="https://www.pngkey.com/png/full/258-2583827_plan-icon-vector.png" alt="cargando..." width="80rem" height="80rem">
+            <div style="padding-top: 1rem"><b class="text-white">Repositorios COVID con más proyectos</b></div>
           </button>
           <br>
-          <button class="espaciado botones-inicio" style="background-color: aquamarine; width:100%" onclick="window.location.href='/lista-mejores-paises'; blurDeCarga()">
+          <button class="espaciado botones-inicio" style="background-color: #7f52d1; width:100%" onclick="window.location.href='/lista-mejores-paises'; blurDeCarga()">
+            <img style="float: left;" src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Globe_icon.svg" alt="cargando..." width="80rem" height="80rem">
             <div><b class="text-white">Paises más activos en la creación de repositorios COVID</b></div>
           </button>
         </div>
-        <button class="col-sm-6 espaciado botones-inicio" style="background-color: #ff5500" onclick="window.location.href='/grafica-de-evolucion'; blurDeCarga()">
+        <button class="col-sm-6 espaciado botones-inicio" style="background-color: #7f52d1" onclick="window.location.href='/grafica-de-evolucion'; blurDeCarga()">
+          <img src="https://image.flaticon.com/icons/png/512/126/126425.png" alt="cargando..." width="80rem" height="80rem">
           <div><b class="text-white">Representación del número de repositorios COVID que han ido apareciendo con el tiempo</b></div>
         </button>
       </div>

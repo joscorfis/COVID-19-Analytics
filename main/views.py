@@ -10,15 +10,15 @@ def index(request):
     return render(request,'index.html', {'contador':pandemia})
 
 def lista_mas_visualizados(request):
-    lista = queries.get_repositorios_coronavirus_mas_visualizados()
+    lista = queries.get_repositorios_coronavirus_mas_seguidores()
     propietarios = lista[0]
     nombres = lista[1]
     fechaCreacion = lista[2]
-    observadores = lista[3]
+    seguidores = lista[3]
     porcentajes = lista[4]
     pandemia = queries.get_cifras_pandemia()
 
-    mylist = zip(propietarios,nombres,fechaCreacion,observadores,porcentajes)
+    mylist = zip(propietarios,nombres,fechaCreacion,seguidores,porcentajes)
     mylist2 = sorted(mylist, key=lambda x: x[3], reverse=True)
     mylist2_names = list(zip(*mylist2))[1]
     mylist2_watchers = list(zip(*mylist2))[3]
@@ -151,7 +151,6 @@ def lista_mas_proyectos(request):
 
 
 def show(request,name_owner):
-    print(name_owner)
     nom_y_prop = name_owner.split("·")
     nombre = nom_y_prop[0]
     propietario = nom_y_prop[1]
@@ -174,8 +173,5 @@ def lista_mejores_paises(request):
     mylist2 = sorted(mylist, key=lambda x: x[1], reverse=True)
     paises_ordenados = list(zip(*mylist2))[0]
     valores_ordenados = list(zip(*mylist2))[1]
-
-    print(paises_ordenados)
-    print(valores_ordenados)
 
     return render(request,'lista_countries.html', {'lista':mylist2, 'paises':paises_ordenados, 'valores':valores_ordenados, 'contador':pandemia})
