@@ -81,12 +81,12 @@ DATABASES = {
         'NAME': 'covid19analyzer',
         'USER': 'c19auser',
         'PASSWORD': 'complexpassword',
-        'HOST': 'localhost',
+        'HOST': 'postgresql-corrugated-65637',
         'PORT': '5432',
     }
 }
 
-BASEURL = 'http://covid-19analytics.herokuapp.com'
+BASEURL = 'http://covid-19analytics-sprint3.herokuapp.com'
 
 import django_heroku
 django_heroku.settings(locals())
