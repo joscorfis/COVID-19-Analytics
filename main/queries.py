@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 
 
-headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
+headers = {"Authorization": "token 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"}
 
 #=================
 # METODO PRINCIPAL
