@@ -644,7 +644,7 @@ def str_to_datetime(str_datetime):
 
 def str_fecha_after_generator(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
-    return fecha + timedelta(days=50)
+    return fecha + timedelta(days=55)
 
 def str_fecha_before_generator(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
