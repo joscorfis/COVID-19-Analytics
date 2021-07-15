@@ -1,5 +1,4 @@
 from dateutil.tz import UTC
-from graphene import ObjectType, String, Schema
 from datetime import date, datetime, timedelta, timezone
 import dateutil.parser
 import requests
