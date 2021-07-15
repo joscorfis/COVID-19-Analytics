@@ -287,7 +287,7 @@ class TestSelenium(StaticLiveServerTestCase):
     def test_representar_repositorios_que_han_ido_apareciendo(self):
         self.driver.get("http://localhost:8000/")
         self.driver.find_element(By.XPATH, "//button[contains(.,\'Representación del número de repositorios COVID que han ido apareciendo con el tiempo\')]").click()
-        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Repositorios COVID con más observadores/watchers\')]")
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Representación del número de repositorios COVID que han ido apareciendo con el tiempo\')]")
         assert len(elements) > 0
         elements = self.driver.find_elements(By.XPATH, "//h3[contains(.,\'Tabla resumen de resultados\')]")
         assert len(elements) > 0
@@ -306,4 +306,48 @@ class TestSelenium(StaticLiveServerTestCase):
         elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Propietario\')]")
         assert len(elements) > 0
         elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Fecha de creación\')]")
+        assert len(elements) > 0
+
+    def test_get_information_from_repository(self):
+        self.driver.get("http://localhost:8000/")
+        self.driver.find_element(By.CSS_SELECTOR, ".row > .invertir_colores").click()
+        self.driver.find_element(By.LINK_TEXT, "COVID-19").click()
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'URL del repositorio:\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Fecha de creación:\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Descripción\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Propietario\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Localidad\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'¿Es un fork de otro repositorio?\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Labels\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Número de proyectos\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'    Proyectos\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Fecha de último push\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Fecha de última modificación\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Número de seguidores\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Número de estrellas\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Número de forks que se le han hecho\')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//th[contains(.,\'Lenguajes\')]")
+        assert len(elements) > 0
+
+    def test_consultar_cifras_pandemia(self):
+        self.driver.get("http://localhost:8000/")
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Contagiados: \')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Recuperados: \')]")
+        assert len(elements) > 0
+        elements = self.driver.find_elements(By.XPATH, "//b[contains(.,\'Fallecidos: \')]")
         assert len(elements) > 0
