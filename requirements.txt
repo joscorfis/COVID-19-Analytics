@@ -1,17 +1,11 @@
 Django==3.1.7
 psycopg2==2.8.6
 coverage==4.5.2
-graphene
 requests
 pandas
 geopy
 django-heroku
-graphene
-requests
-panda
 gunicorn
-pillow
-boto3
 django-storages
 python-dotenv
 djangorestframework

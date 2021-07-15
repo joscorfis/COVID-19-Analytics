@@ -34,7 +34,7 @@
   <!-- - - - - - -->
   <!--   BODY    -->
   <!-- - - - - - -->
-  <!-- <body background="{% static 'images/bgmoviles.jpg' %}" > -->
+
   <body>
     <div class="loading">
       <div class="text-center loading-advert">
@@ -49,7 +49,6 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="height: 60px;">
           <div class="pr-4">
             <a class="navbar-brand" href="http://localhost:8000/" >
-              <!--<img src="{% static 'images/logo.png' %}" width="200" height="50"> -->
             </a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,37 +59,9 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active seccion-barra">
                 <a class="nav-link" href="/">
-                  <img src="/static/images/logo.png" height="45rem" width="140rem">
+                  <img src="/static/images/favicon.png" height="45rem" width="45rem"> &nbsp Covid-19 Analytics
                 </a>
               </li>
-              <!-- 
-              <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8000/lista/">Todos los Móviles</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Buscar por</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="http://localhost:8000/lista/color/">Color</a>
-                  <a class="dropdown-item" href="http://localhost:8000/lista/fabricante/">Fabricante</a>
-                  <a class="dropdown-item" href="http://localhost:8000/lista/precio/">Precio</a>
-                  <a class="dropdown-item" href="http://localhost:8000/lista/so/">Sistema operativo</a>
-                  <a class="dropdown-item" href="http://localhost:8000/lista/nucleos/">Núcleos del procesador</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="http://localhost:8000/lista/contenido/">Nombre</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recomendaciones</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/moviles-similares/">Moviles similares</a>
-                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/moviles-rec-user/">Moviles recomendados por usuario</a>
-                  <a class="dropdown-item" href="http://localhost:8000/recomendacion/user-rec-moviles/">Moviles recomendados por usuario</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8000/log/">Log</a>
-              </li>
-              -->
             </ul>
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active seccion-barra text-center">
@@ -123,31 +94,6 @@
     <script src="{% static 'gotop.js' %}"></script>
 
   </body>
-
-  <!-- - - - - - -->
-  <!--  FOOTER   -->
-  <!-- - - - - - -->
-
-  <!--
-  <footer>
-    <div class="bs-component">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary foot">
-        <div class="float-right" style="color: #bbbbbb; top:-20px;font-size: 15px">
-            <span><b>Trabajo realizado por:</b> José María Cornac Fisas</span><br>
-            <span><b>Para:</b> El proyecto de la asignatura AII</span>
-        </div>
-        <ul class="navbar-nav active">
-          <a class="nav-link" style="padding:0;" href="https://www.maxmovil.com/es/moviles-libres/comprar-smartphones-libres.html"><i style="font-size:36px" class="fa fa-book"></i> Fuente original</a>
-        </ul>
-        {% block pie %}{% endblock %} 
-      </nav>
-    </div>
-  </footer>
-  -->
-
-  <!-- - - - - - -->
-  <!-- FUNCIONES -->
-  <!-- - - - - - -->
 
   <script>
     function showProgressBar() {
