@@ -5,6 +5,7 @@ requests
 pandas
 geopy
 bs4
+lxml
 django-heroku
 gunicorn
 django-storages
