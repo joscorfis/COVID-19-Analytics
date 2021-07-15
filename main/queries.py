@@ -6,9 +6,18 @@ import requests
 import json
 import pandas as pd
 import numpy as np
+from functools import partial
+from geopy.geocoders import Nominatim
 
+import shelve
+from django.shortcuts import render, redirect, get_object_or_404
+from bs4 import BeautifulSoup
+import urllib.request
+import lxml
+import re, os, shutil
+import random
 
-headers = {"Authorization": "token 7efc823e322b745df4ef31c4e95ff44327a029f3"}
+headers = {"Authorization": "token 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"}
 
 #=================
 # METODO PRINCIPAL
@@ -26,7 +35,7 @@ def run_query(query): # A simple function to use requests.post to make the API c
 # CONSULTAS
 #==========
 
-def get_repositorios_coronavirus_mas_visualizados():
+def get_repositorios_coronavirus_mas_seguidores():
 
     query = """
     {
@@ -57,19 +66,20 @@ def get_repositorios_coronavirus_mas_visualizados():
     propietarios = []
     nombres = []
     fechaCreacion = []
-    observadores = []
+    seguidores = []
     porcentajes = []
+    
     for i in range(num_results):
         propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
         nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
         fechaCreacion.append(date_time_formatter(result["data"]["search"]["edges"][i]["node"]["createdAt"]))
-        observadores.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
+        seguidores.append(result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"])
         if(i<1):
-            max_observadores = observadores[0]
+            max_seguidores = seguidores[0]
             porcentajes.append(100)
         else:
-            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_observadores)*100)
-    return [propietarios,nombres,fechaCreacion,observadores,porcentajes]  
+            porcentajes.append((result["data"]["search"]["edges"][i]["node"]["watchers"]["totalCount"]/max_seguidores)*100)
+    return [propietarios,nombres,fechaCreacion,seguidores,porcentajes]  
 
 
 def get_repositorios_coronavirus_mas_forks():
@@ -238,7 +248,7 @@ def get_primeros_repositorios_coronavirus_creados():
     tiempo = []
     for i in range(num_results):
         createAt = result["data"]["search"]["edges"][i]["node"]["createdAt"]
-        if dateutil.parser.isoparse(createAt).date() > date(2019,12,31):
+        if dateutil.parser.isoparse(createAt).date() > date(2019,12,30):
             propietarios.append(result["data"]["search"]["edges"][i]["node"]["owner"]["login"])
             nombres.append(result["data"]["search"]["edges"][i]["node"]["name"])
             fechaCreacion.append(date_time_formatter(createAt))
@@ -368,7 +378,6 @@ def get_evolucion_repositorios_coronavirus(fechas,str_fecha):
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
     nombres = []
@@ -440,7 +449,6 @@ def get_repositorios_coronavirus_mas_proyectos(fechas,str_fecha):
 
     result = run_query(query) # Execute the query
     num_results = int(result["data"]["search"]["repositoryCount"])
-    print(num_results)
     if(num_results>100):
         num_results = 100
     nombres = []
@@ -528,10 +536,6 @@ def get_information_from_repository(name, owner):
     """ % (owner, name)
 
     result = run_query(query) # Execute the query
-    print(result)
-
-    print(len(result["data"]["repositoryOwner"]["repository"]["languages"]["nodes"]))
-
 
     foto = result["data"]["repositoryOwner"]["repository"]["owner"]["avatarUrl"]
     url = result["data"]["repositoryOwner"]["repository"]["url"]
@@ -539,10 +543,10 @@ def get_information_from_repository(name, owner):
     nombre = name
     descripcion = result["data"]["repositoryOwner"]["repository"]["description"]
     propietario = owner
-    print 
+    location = "No ha sido asignada"
     if("location" in result["data"]["repositoryOwner"]["repository"]["owner"]):
-        location = result["data"]["repositoryOwner"]["repository"]["owner"]["location"]
-    else: location = "No ha sido asignada"
+        if(result["data"]["repositoryOwner"]["repository"]["owner"]["location"] is not None):
+            location = result["data"]["repositoryOwner"]["repository"]["owner"]["location"] + " - (" + from_local_to_country(result["data"]["repositoryOwner"]["repository"]["owner"]["location"]) + ")"
     isForked = result["data"]["repositoryOwner"]["repository"]["isFork"]
     if(bool(isForked)):
         isForked = "Sí"
@@ -569,6 +573,65 @@ def get_information_from_repository(name, owner):
     return [foto,url,nombre,propietario,location,isForked,languages,labels,num_proyectos,proyectos,last_push,last_update,watchers,stars,forks,parent,fechaCreacion,descripcion]
 
 
+def get_paises_mas_repositorios():
+    query = """
+        {
+    search(query: "topic:covid-19 stars:>100", type: REPOSITORY, first: 100) {
+        repositoryCount
+        edges {
+        node {
+            ... on Repository {
+            owner {
+                ... on User {
+                location
+                }
+            }
+            updatedAt
+            }
+        }
+        }
+    }
+    }
+    """
+
+    result = run_query(query) # Execute the query
+    num_results = int(result["data"]["search"]["repositoryCount"])
+    if(num_results>100):
+        num_results = 100
+    paises = []
+
+    for i in range(num_results):
+        localidad = result["data"]["search"]["edges"][i]["node"]["owner"]
+        if(len(localidad)>0):
+            pais = from_local_to_country(result["data"]["search"]["edges"][i]["node"]["owner"]["location"])
+            if(pais is not None):
+                paises.append(pais)
+
+    return paises
+
+
+def get_cifras_pandemia():
+    f = urllib.request.urlopen("https://github.com/datasets/covid-19/blob/main/data/worldwide-aggregate.csv")
+    s = BeautifulSoup(f, "lxml")
+
+    tbody = s.find("table", class_="js-csv-data csv-data js-file-line-container").find("tbody").find_all("tr")
+    
+    pandemia_hoy = tbody[len(tbody)-1].find("td").find_next_sibling()
+    casos_confirmados_hoy = pandemia_hoy.find_next_sibling()
+    recuperaciones_hoy = casos_confirmados_hoy.find_next_sibling()
+    fallecimientos_hoy = recuperaciones_hoy.find_next_sibling()
+
+    pandemia_ayer = tbody[len(tbody)-2].find("td").find_next_sibling()
+    casos_confirmados_ayer = pandemia_ayer.find_next_sibling()
+    recuperaciones_ayer = casos_confirmados_ayer.find_next_sibling()
+    fallecimientos_ayer = recuperaciones_ayer.find_next_sibling()
+
+    casos_confirmados = int(casos_confirmados_hoy.get_text())-int(casos_confirmados_ayer.get_text())
+    recuperaciones = int(recuperaciones_hoy.get_text()) - int(recuperaciones_ayer.get_text())
+    fallecimientos = int(fallecimientos_hoy.get_text()) - int(fallecimientos_ayer.get_text())
+
+    return [casos_confirmados, recuperaciones, fallecimientos]
+
 #==============
 # Otros métodos
 #==============
@@ -584,6 +647,10 @@ def str_fecha_after_generator(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
     return fecha + timedelta(days=50)
 
+def str_fecha_before_generator(str_datetime):
+    fecha = dateutil.parser.isoparse(str_datetime)
+    return fecha - timedelta(days=20)
+
 def days_until_now(str_datetime):
     fecha = dateutil.parser.isoparse(str_datetime)
     result = (date.today() - fecha.date()).days
@@ -594,3 +661,14 @@ def date_time_until_now(str_datetime):
     result = (datetime.now().astimezone(UTC)) - fecha
     str_result = str(result).split(":")
     return str_result[0].replace("days","días") + "h " + str_result[1] + "min y " + str_result[2].split(".")[0] + "seg"
+
+def from_local_to_country(str_local):
+    geolocator = Nominatim(user_agent="covid19analyzer")
+    location = geolocator.geocode(str_local)
+    if (location is not None):
+        localidad = location.address
+        localidad_partes = localidad.split(",")
+        pais = localidad_partes[len(localidad_partes)-1].strip()
+        return pais
+    else:
+        return None

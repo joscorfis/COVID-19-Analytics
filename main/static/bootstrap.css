@@ -10313,11 +10313,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .navbar.bg-primary {
-  background-image: linear-gradient(#875daa, #875daa 50%, #875daa);
+  background-image: linear-gradient(#7f52d1, #7f52d1 50%, #7f52d1);
   background-repeat: no-repeat;
   -webkit-filter: none;
   filter: none;
-  border: 1px solid #36065c;
 }
 
 .navbar.bg-dark {

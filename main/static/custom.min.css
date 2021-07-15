@@ -106,12 +106,10 @@ body {
 }
 
 .seccion-barra:hover {
-  background-color: #a972ce;
-  border-radius: 10%;
+  background-color: #9c7fd0  ;
 }
 .seccion-barra:active {
-  background-color: #daa2ff;
-  border-radius: 10%;
+  background-color: #9c7fd0  ;
 }
 
 .grafica_support {
@@ -253,7 +251,7 @@ body {
 .loading-gif {
   position: fixed;
   top: 50%;
-  left: 43%;
+  left: 44%;
   z-index: 2;
 }
 
@@ -262,7 +260,7 @@ body {
   padding: 1.5rem;
   border-radius: 1rem;
   top: 25%;
-  left: 26%;
+  left: 30%;
   background-color: rgba(255,255,255,0.7);
   z-index: 2;
 
@@ -273,3 +271,4 @@ body {
   border-radius: 20px;
   margin-bottom: 30px;
 }
+
